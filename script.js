@@ -1,12 +1,8 @@
-const WHATSAPP_NUMBER = "919999999999"; // CHANGE THIS to your WhatsApp number, e.g. 919876543210
+const WHATSAPP_NUMBER = "919167005060";
 
 const products = [
-  {id:1,name:"Pomfret",category:"Premium",emoji:"🐟",price:899,unit:"per kg",desc:"Premium white pomfret for a special meal."},
-  {id:2,name:"Surmai",category:"Sea Fish",emoji:"🐟",price:699,unit:"per kg",desc:"Popular, flavourful and perfect for fry or curry."},
-  {id:3,name:"Rawas",category:"Premium",emoji:"🐟",price:799,unit:"per kg",desc:"Tender salmon-style Indian fish with rich flavour."},
-  {id:4,name:"Bangda",category:"Sea Fish",emoji:"🐟",price:399,unit:"per kg",desc:"Fresh mackerel, ideal for traditional curry."},
-  {id:5,name:"Prawns",category:"Prawns",emoji:"🦐",price:649,unit:"per kg",desc:"Fresh prawns, cleaned and ready to cook."},
-  {id:6,name:"Bombay Duck",category:"Sea Fish",emoji:"🐟",price:499,unit:"per kg",desc:"A Mumbai favourite for crispy fry and curry."}
+  {id:1,name:"Freshwater / Cultivated White Prawns",marathi:"तलावातील कोळंबी",hindi:"तालाब का झींगा",category:"Prawns",image:"assets/white-prawns.jpg",priceText:"₹570 – ₹680",priceMin:570,unit:"per kg",desc:"Freshwater cultivated white prawns, selected for freshness and quality."},
+  {id:2,name:"Rawas (Indian Salmon)",marathi:"रावस",hindi:"",category:"Sea Fish",image:"assets/rawas.jpg",priceText:"₹900 – ₹1,900",priceMin:900,unit:"per kg",desc:"Fresh Rawas (Indian Salmon), a popular choice for curry and fry."}
 ];
 
 let cart = JSON.parse(localStorage.getItem("fishcopCart") || "[]");
@@ -22,13 +18,17 @@ function renderProducts(filter="All"){
   const list = filter === "All" ? products : products.filter(p => p.category === filter);
   productGrid.innerHTML = list.map(p => `
     <article class="product-card">
-      <div class="product-img">${p.emoji}</div>
+      <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
       <div class="product-info">
         <span class="tag">${p.category}</span>
         <h3>${p.name}</h3>
+        <div class="local-names">
+          ${p.marathi ? `<span>${p.marathi}</span>` : ""}
+          ${p.hindi ? `<span>${p.hindi}</span>` : ""}
+        </div>
         <p>${p.desc}</p>
         <div class="price-row">
-          <span class="price">${money(p.price)} <small>/ ${p.unit.replace("per ","")}</small></span>
+          <span class="price">${p.priceText} <small>/ kg</small></span>
           <button class="add-btn" onclick="addToCart(${p.id})">Add +</button>
         </div>
       </div>
@@ -60,7 +60,7 @@ function renderCart(){
       <div class="cart-line">
         <div>
           <h4>${i.name}</h4>
-          <p>${money(i.price)} / kg</p>
+          <p>${i.priceText} / kg • Approx. range</p>
           <div class="qty">
             <button onclick="changeQty(${i.id},-1)">−</button><strong>${i.qty}</strong><button onclick="changeQty(${i.id},1)">+</button>
             <button class="remove" onclick="removeItem(${i.id})">Remove</button>
@@ -70,8 +70,7 @@ function renderCart(){
       </div>
     `).join("");
   }
-  const total = items.reduce((sum,i)=>sum+i.price*i.qty,0);
-  document.getElementById("cartTotal").textContent = money(total);
+  document.getElementById("cartTotal").textContent = items.length ? "To confirm" : "₹0";
 }
 
 function changeQty(id,delta){
@@ -93,12 +92,9 @@ function orderOnWhatsApp(){
   }
   const items = cart.map(i => {
     const p = products.find(x=>x.id===i.id);
-    return `• ${p.name} - ${i.qty} kg - ${money(p.price*i.qty)}`;
+    return `• ${p.name} - ${i.qty} kg - ${p.priceText} / kg`;
   }).join("\n");
-  const total = cart.reduce((s,i)=>{
-    const p=products.find(x=>x.id===i.id); return s+p.price*i.qty;
-  },0);
-  const msg = `Hello FishCop.com! I would like to order:\n\n${items}\n\nEstimated total: ${money(total)}\n\nPlease confirm availability and delivery charges.`;
+  const msg = `Hello FishCop.com! I would like to order:\n\n${items}\n\nPlease confirm the final price, availability and delivery charges.`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
 }
 
