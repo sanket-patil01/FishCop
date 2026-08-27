@@ -1,7 +1,6 @@
 const WHATSAPP_NUMBER = "919167005060";
 
-// EASY PRODUCT ADDITION ENGINE
-// To add new products later, simply copy one object structure inside this array!
+// PRODUCT DATABASE - Aap aage aur bhi products issi tarah add kar sakte hain!
 const products = [
   {
     id: 1,
@@ -9,7 +8,7 @@ const products = [
     marathi: "तलावातील कोळंबी",
     hindi: "तालाब का झींगा",
     category: "Prawns",
-    image: "assets/white-prawns.jpg", // Update to .png if your file is PNG
+    image: "assets/white-prawns.jpg",
     priceText: "₹570 – ₹680",
     unit: "per kg",
     desc: "Freshwater cultivated white prawns, selected for freshness and quality."
@@ -20,10 +19,32 @@ const products = [
     marathi: "रावस",
     hindi: "",
     category: "Sea Fish",
-    image: "assets/rawas.jpg", // Update to .png if your file is PNG
+    image: "assets/rawas.jpg",
     priceText: "₹900 – ₹1,900",
     unit: "per kg",
     desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry."
+  },
+  {
+    id: 3,
+    name: "Silver Pomfret",
+    marathi: "पापलेट",
+    hindi: "पॉपफलेट",
+    category: "Premium",
+    image: "assets/pomfret.jpg",
+    priceText: "₹995 – ₹2,100",
+    unit: "per kg",
+    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry."
+  },
+  {
+    id: 4,
+    name: "Small Wet Peeled Shrimps (Kardi / Karandi / Aambad)",
+    marathi: "कोळंबी / करडी / करंडी / आंबाड",
+    hindi: "छोटी झींगा",
+    category: "Prawns",
+    image: "assets/kardi-prawns.jpg",
+    priceText: "₹450 – ₹950",
+    unit: "per kg",
+    desc: "Cleaned and peeled small shrimps, great for quick recipes and gravies."
   }
 ];
 
@@ -38,8 +59,8 @@ const overlay = document.getElementById("overlay");
 
 // RENDER PRODUCTS
 function renderProducts() {
-  const filter = filterSelect.value;
-  const query = searchInput.value.toLowerCase().trim();
+  const filter = filterSelect ? filterSelect.value : "All";
+  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
 
   const filtered = products.filter(p => {
     const matchesCategory = filter === "All" || p.category === filter;
@@ -167,14 +188,14 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
 });
 
 // EVENT LISTENERS
-filterSelect.addEventListener("change", renderProducts);
-searchInput.addEventListener("input", renderProducts);
+if (filterSelect) filterSelect.addEventListener("change", renderProducts);
+if (searchInput) searchInput.addEventListener("input", renderProducts);
 
 document.querySelectorAll(".pill").forEach(pill => {
   pill.addEventListener("click", () => {
     document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
     pill.classList.add("active");
-    filterSelect.value = pill.dataset.filter;
+    if (filterSelect) filterSelect.value = pill.dataset.filter;
     renderProducts();
   });
 });
