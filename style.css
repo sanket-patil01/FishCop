@@ -134,8 +134,7 @@ body {
 }
 .hero-features strong { display: block; font-size: 16px; color: var(--dark); }
 .hero-features span { font-size: 13px; color: var(--gray); }
-
-/* HERO SLIDER WRAPPER & 4 OUTSIDE FLOATING BADGES FIX */
+/* HERO SLIDER WRAPPER & FLOATING BADGES FIX */
 .hero-image-box {
   display: flex;
   justify-content: center;
@@ -164,22 +163,24 @@ body {
   justify-content: center;
 }
 
+/* Image side se na kate isliye scale 0.85 kar diya hai */
 .badge-img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
-  border-radius: 50%;
+  transform: scale(0.85);
   transition: opacity 0.5s ease-in-out;
 }
 
+/* FLOATING BADGES (CHOTA SIZE) */
 .floating-badge {
   position: absolute;
   background: #ffffff;
-  padding: 8px 16px;
-  border-radius: 30px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
-  font-size: 13px;
+  padding: 5px 11px;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+  font-size: 11px;
   font-weight: 700;
   color: #0f172a;
   z-index: 20;
@@ -187,11 +188,10 @@ body {
   border: 1px solid #f1f5f9;
 }
 
-.floating-badge.top-left { top: 15px; left: -25px; }
-.floating-badge.top-right { top: 25px; right: -25px; }
-.floating-badge.bottom-left { bottom: 25px; left: -25px; }
-.floating-badge.bottom-right { bottom: 15px; right: -25px; }
-
+.floating-badge.top-left { top: 20px; left: -15px; }
+.floating-badge.top-right { top: 25px; right: -15px; }
+.floating-badge.bottom-left { bottom: 25px; left: -15px; }
+.floating-badge.bottom-right { bottom: 20px; right: -15px; }
 /* PRODUCTS */
 .products-section { padding: 80px 0; }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
