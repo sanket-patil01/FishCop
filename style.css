@@ -375,3 +375,22 @@ body {
   .floating-badge.bottom-right { bottom: 0px; right: -10px; }
   .footer-grid { grid-template-columns: 1fr; }
 }
+/* FIXING SECTION STACKING & WIDTH ISSUES */
+body {
+  display: block !important;
+}
+
+.hero-image-box, 
+.products-section, 
+.categories-section {
+  width: 100%;
+  clear: both;
+  display: block;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
