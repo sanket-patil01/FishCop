@@ -1,6 +1,6 @@
 const WHATSAPP_NUMBER = "919167005060";
 
-// HERO IMAGE SLIDER (7 Images Auto-Rotate)
+// HERO 7-IMAGE SLIDER
 const heroImages = [
   "assets/hero-1.png",
   "assets/hero-2.png",
@@ -16,16 +16,16 @@ const heroImgElement = document.getElementById("heroSlider");
 
 if (heroImgElement) {
   setInterval(() => {
-    heroImgElement.style.opacity = "0"; // Smooth fade out
+    heroImgElement.style.opacity = "0";
     setTimeout(() => {
       heroIndex = (heroIndex + 1) % heroImages.length;
       heroImgElement.src = heroImages[heroIndex];
-      heroImgElement.style.opacity = "1"; // Smooth fade in
+      heroImgElement.style.opacity = "1";
     }, 400);
-  }, 2500); // Har 2.5 second me image change hogi
+  }, 2500);
 }
 
-// PRODUCT DATABASE
+// PRODUCTS
 const products = [
   {
     id: 1,
@@ -82,7 +82,6 @@ const cartPanel = document.getElementById("cartPanel");
 const customerModal = document.getElementById("customerModal");
 const overlay = document.getElementById("overlay");
 
-// RENDER PRODUCTS
 function renderProducts() {
   const filter = filterSelect ? filterSelect.value : "All";
   const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
@@ -120,7 +119,6 @@ function renderProducts() {
   `).join("");
 }
 
-// CART MANAGEMENT
 function addToCart(id) {
   const found = cart.find(i => i.id === id);
   if (found) found.qty++;
@@ -173,7 +171,6 @@ function removeItem(id) {
   saveCart();
 }
 
-// UI MODALS & DRAWERS
 function openCart() { cartPanel.classList.add("open"); overlay.classList.add("show"); }
 function closeCart() { cartPanel.classList.remove("open"); overlay.classList.remove("show"); }
 
@@ -192,7 +189,6 @@ function closeModal() {
   overlay.classList.remove("show");
 }
 
-// WHATSAPP INTEGRATION
 document.getElementById("orderForm").addEventListener("submit", function(e) {
   e.preventDefault();
   
@@ -212,7 +208,6 @@ document.getElementById("orderForm").addEventListener("submit", function(e) {
   closeModal();
 });
 
-// EVENT LISTENERS
 if (filterSelect) filterSelect.addEventListener("change", renderProducts);
 if (searchInput) searchInput.addEventListener("input", renderProducts);
 
@@ -245,6 +240,5 @@ document.getElementById("menuBtn").addEventListener("click", () => {
   document.getElementById("mainNav").classList.toggle("open");
 });
 
-// INITIALIZE
 renderProducts();
 renderCart();
