@@ -20,7 +20,7 @@
 
       <nav class="main-nav" id="mainNav">
         <a href="#home">Home</a>
-        <a href="#products">Shop</a>
+        <a href="#shop">Shop</a>
         <a href="#why-us">Why Us</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -43,7 +43,7 @@
         <p>Carefully selected, cleaned, and delivered straight to your kitchen. Place your order easily via WhatsApp!</p>
         
         <div class="hero-btns">
-          <a href="#products" class="btn btn-primary">Explore Catch</a>
+          <a href="#shop" class="btn btn-primary">Explore Catch</a>
           <a href="#" class="btn btn-whatsapp" id="heroWhatsappBtn">Order via WhatsApp</a>
         </div>
 
@@ -53,7 +53,8 @@
           <div><strong>Doorstep</strong><span>Fast Delivery</span></div>
         </div>
       </div>
-<!-- HERO SLIDER SECTION -->
+
+      <!-- HERO SLIDER SECTION -->
       <div class="hero-image-box">
         <div class="slider-wrapper">
           <div class="circle-bg">
@@ -66,50 +67,16 @@
           <div class="floating-badge bottom-right">🛡️ 100% Quality Checked</div>
         </div>
       </div>
+    </div> <!-- hero-grid close -->
+  </section>
 
-      <!-- PRODUCT CATEGORIES SECTION -->
-      <section class="categories-section">
-        <div class="container">
-          <div class="categories-header">
-            <h2>Product Categories</h2>
-          </div>
-          <div class="categories-box">
-            <div class="category-item" onclick="filterCategory('seawater')">
-              <div class="cat-img-wrap"><img src="assets/cat-seawater.png" alt="Sea Water Seafood"></div>
-              <span>Sea Water Seafood</span>
-            </div>
-            <div class="category-item" onclick="filterCategory('prawns')">
-              <div class="cat-img-wrap"><img src="assets/cat-prawns.png" alt="Prawns Shrimps"></div>
-              <span>Prawns Shrimps</span>
-            </div>
-            <div class="category-item" onclick="filterCategory('freshwater')">
-              <div class="cat-img-wrap"><img src="assets/cat-freshwater.png" alt="Fresh Water Cultivated Fish"></div>
-              <span>Fresh Water Cultivated Fish</span>
-            </div>
-            <div class="category-item" onclick="filterCategory('shelled')">
-              <div class="cat-img-wrap"><img src="assets/cat-shelled.png" alt="Shelled Seafood"></div>
-              <span>Shelled Seafood</span>
-            </div>
-            <div class="category-item" onclick="filterCategory('dried')">
-              <div class="cat-img-wrap"><img src="assets/cat-dried.png" alt="Dried Fish"></div>
-              <span>Dried Fish</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- PRODUCTS SECTION HEAD -->
-      <section class="products-section" id="shop">
-        <div class="container">
-          <div class="section-head">
-            <div>
-              <span class="section-tag">FRESH CATCH</span>
-              <h2>Our Best Selling Products</h2>
-            </div>
-          </div>
+  <!-- OUR BEST SELLING PRODUCTS SECTION -->
+  <section class="products-section" id="shop">
+    <div class="container">
+      <div class="section-head">
         <div>
-          <span class="section-tag">OUR SELECTION</span>
-          <h2>Today's Fresh Catch</h2>
+          <span class="section-tag">POPULAR</span>
+          <h2>Our Best Selling Products</h2>
         </div>
         <div class="controls">
           <input type="text" id="searchInput" placeholder="Search fish, prawns..." />
@@ -131,6 +98,37 @@
 
       <div class="product-grid" id="productGrid">
         <!-- Products populated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCT CATEGORIES SECTION (AFTER BEST SELLING PRODUCTS) -->
+  <section class="categories-section">
+    <div class="container">
+      <div class="categories-header">
+        <h2>Product Categories</h2>
+      </div>
+      <div class="categories-box">
+        <div class="category-item" onclick="filterCategory('seawater')">
+          <div class="cat-img-wrap"><img src="assets/cat-seawater.png" alt="Sea Water Seafood"></div>
+          <span>Sea Water Seafood</span>
+        </div>
+        <div class="category-item" onclick="filterCategory('prawns')">
+          <div class="cat-img-wrap"><img src="assets/cat-prawns.png" alt="Prawns Shrimps"></div>
+          <span>Prawns Shrimps</span>
+        </div>
+        <div class="category-item" onclick="filterCategory('freshwater')">
+          <div class="cat-img-wrap"><img src="assets/cat-freshwater.png" alt="Fresh Water Cultivated Fish"></div>
+          <span>Fresh Water Cultivated Fish</span>
+        </div>
+        <div class="category-item" onclick="filterCategory('shelled')">
+          <div class="cat-img-wrap"><img src="assets/cat-shelled.png" alt="Shelled Seafood"></div>
+          <span>Shelled Seafood</span>
+        </div>
+        <div class="category-item" onclick="filterCategory('dried')">
+          <div class="cat-img-wrap"><img src="assets/cat-dried.png" alt="Dried Fish"></div>
+          <span>Dried Fish</span>
+        </div>
       </div>
     </div>
   </section>
@@ -175,7 +173,7 @@
         <h4>Quick Links</h4>
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#products">Shop</a></li>
+          <li><a href="#shop">Shop</a></li>
           <li><a href="#why-us">Why Us</a></li>
         </ul>
       </div>
