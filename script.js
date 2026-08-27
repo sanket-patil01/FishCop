@@ -1,6 +1,31 @@
 const WHATSAPP_NUMBER = "919167005060";
 
-// PRODUCT DATABASE - Aap aage aur bhi products issi tarah add kar sakte hain!
+// HERO IMAGE SLIDER (7 Images Auto-Rotate)
+const heroImages = [
+  "assets/hero-1.png",
+  "assets/hero-2.png",
+  "assets/hero-3.png",
+  "assets/hero-4.png",
+  "assets/hero-5.png",
+  "assets/hero-6.png",
+  "assets/hero-7.png"
+];
+
+let heroIndex = 0;
+const heroImgElement = document.getElementById("heroSlider");
+
+if (heroImgElement) {
+  setInterval(() => {
+    heroImgElement.style.opacity = "0"; // Smooth fade out
+    setTimeout(() => {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      heroImgElement.src = heroImages[heroIndex];
+      heroImgElement.style.opacity = "1"; // Smooth fade in
+    }, 400);
+  }, 2500); // Har 2.5 second me image change hogi
+}
+
+// PRODUCT DATABASE
 const products = [
   {
     id: 1,
