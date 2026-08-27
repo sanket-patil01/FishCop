@@ -1,22 +1,60 @@
 const WHATSAPP_NUMBER = "919167005060";
 
+// EASY PRODUCT ADDITION ENGINE
+// To add new products later, simply copy one object structure inside this array!
 const products = [
-  {id:1,name:"Freshwater / Cultivated White Prawns",marathi:"तलावातील कोळंबी",hindi:"तालाब का झींगा",category:"Prawns",image:"assets/white-prawns.jpg",priceText:"₹570 – ₹680",priceMin:570,unit:"per kg",desc:"Freshwater cultivated white prawns, selected for freshness and quality."},
-  {id:2,name:"Rawas (Indian Salmon)",marathi:"रावस",hindi:"",category:"Sea Fish",image:"assets/rawas.jpg",priceText:"₹900 – ₹1,900",priceMin:900,unit:"per kg",desc:"Fresh Rawas (Indian Salmon), a popular choice for curry and fry."}
+  {
+    id: 1,
+    name: "Freshwater / Cultivated White Prawns",
+    marathi: "तलावातील कोळंबी",
+    hindi: "तालाब का झींगा",
+    category: "Prawns",
+    image: "assets/white-prawns.jpg", // Update to .png if your file is PNG
+    priceText: "₹570 – ₹680",
+    unit: "per kg",
+    desc: "Freshwater cultivated white prawns, selected for freshness and quality."
+  },
+  {
+    id: 2,
+    name: "Rawas (Indian Salmon)",
+    marathi: "रावस",
+    hindi: "",
+    category: "Sea Fish",
+    image: "assets/rawas.jpg", // Update to .png if your file is PNG
+    priceText: "₹900 – ₹1,900",
+    unit: "per kg",
+    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry."
+  }
 ];
 
 let cart = JSON.parse(localStorage.getItem("fishcopCart") || "[]");
 
 const productGrid = document.getElementById("productGrid");
 const filterSelect = document.getElementById("filterSelect");
+const searchInput = document.getElementById("searchInput");
 const cartPanel = document.getElementById("cartPanel");
+const customerModal = document.getElementById("customerModal");
 const overlay = document.getElementById("overlay");
 
-function money(n){ return "₹" + n.toLocaleString("en-IN"); }
+// RENDER PRODUCTS
+function renderProducts() {
+  const filter = filterSelect.value;
+  const query = searchInput.value.toLowerCase().trim();
 
-function renderProducts(filter="All"){
-  const list = filter === "All" ? products : products.filter(p => p.category === filter);
-  productGrid.innerHTML = list.map(p => `
+  const filtered = products.filter(p => {
+    const matchesCategory = filter === "All" || p.category === filter;
+    const matchesSearch = p.name.toLowerCase().includes(query) || 
+                          (p.marathi && p.marathi.toLowerCase().includes(query)) ||
+                          (p.hindi && p.hindi.toLowerCase().includes(query));
+    return matchesCategory && matchesSearch;
+  });
+
+  if (!filtered.length) {
+    productGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:30px;">No fish products found matching your search.</p>';
+    return;
+  }
+
+  productGrid.innerHTML = filtered.map(p => `
     <article class="product-card">
       <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
       <div class="product-info">
@@ -36,87 +74,131 @@ function renderProducts(filter="All"){
   `).join("");
 }
 
-function addToCart(id){
+// CART MANAGEMENT
+function addToCart(id) {
   const found = cart.find(i => i.id === id);
-  if(found) found.qty++;
-  else cart.push({id,qty:1});
-  saveCart(); openCart();
+  if (found) found.qty++;
+  else cart.push({ id, qty: 1 });
+  saveCart();
+  openCart();
 }
 
-function saveCart(){
+function saveCart() {
   localStorage.setItem("fishcopCart", JSON.stringify(cart));
   renderCart();
 }
 
-function renderCart(){
-  const count = cart.reduce((sum,i)=>sum+i.qty,0);
+function renderCart() {
+  const count = cart.reduce((sum, i) => sum + i.qty, 0);
   document.getElementById("cartCount").textContent = count;
-  const items = cart.map(i => ({...products.find(p=>p.id===i.id),qty:i.qty}));
+  const items = cart.map(i => ({ ...products.find(p => p.id === i.id), qty: i.qty }));
   const box = document.getElementById("cartItems");
-  if(!items.length){
+
+  if (!items.length) {
     box.innerHTML = '<p class="empty">Your cart is empty.</p>';
   } else {
     box.innerHTML = items.map(i => `
       <div class="cart-line">
         <div>
           <h4>${i.name}</h4>
-          <p>${i.priceText} / kg • Approx. range</p>
+          <p>${i.priceText} / kg</p>
           <div class="qty">
-            <button onclick="changeQty(${i.id},-1)">−</button><strong>${i.qty}</strong><button onclick="changeQty(${i.id},1)">+</button>
+            <button onclick="changeQty(${i.id}, -1)">−</button>
+            <strong>${i.qty} kg</strong>
+            <button onclick="changeQty(${i.id}, 1)">+</button>
             <button class="remove" onclick="removeItem(${i.id})">Remove</button>
           </div>
         </div>
-        <strong>${money(i.price*i.qty)}</strong>
       </div>
     `).join("");
   }
-  document.getElementById("cartTotal").textContent = items.length ? "To confirm" : "₹0";
 }
 
-function changeQty(id,delta){
-  const item = cart.find(i=>i.id===id);
-  if(!item) return;
+function changeQty(id, delta) {
+  const item = cart.find(i => i.id === id);
+  if (!item) return;
   item.qty += delta;
-  if(item.qty <= 0) cart = cart.filter(i=>i.id!==id);
+  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
   saveCart();
 }
-function removeItem(id){ cart = cart.filter(i=>i.id!==id); saveCart(); }
 
-function openCart(){ cartPanel.classList.add("open"); overlay.classList.add("show"); }
-function closeCart(){ cartPanel.classList.remove("open"); overlay.classList.remove("show"); }
-
-function orderOnWhatsApp(){
-  if(!cart.length){
-    alert("Please add at least one fish to your cart.");
-    return;
-  }
-  const items = cart.map(i => {
-    const p = products.find(x=>x.id===i.id);
-    return `• ${p.name} - ${i.qty} kg - ${p.priceText} / kg`;
-  }).join("\n");
-  const msg = `Hello FishCop.com! I would like to order:\n\n${items}\n\nPlease confirm the final price, availability and delivery charges.`;
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`,"_blank");
+function removeItem(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart();
 }
 
-filterSelect.addEventListener("change", e => renderProducts(e.target.value));
-document.querySelectorAll(".category-card").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const f = btn.dataset.filter;
-    filterSelect.value = f;
-    renderProducts(f);
-    document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+// UI MODALS & DRAWERS
+function openCart() { cartPanel.classList.add("open"); overlay.classList.add("show"); }
+function closeCart() { cartPanel.classList.remove("open"); overlay.classList.remove("show"); }
+
+function openModal() {
+  if (!cart.length) {
+    alert("Please add at least one product to your cart first.");
+    return;
+  }
+  closeCart();
+  customerModal.classList.add("open");
+  overlay.classList.add("show");
+}
+
+function closeModal() {
+  customerModal.classList.remove("open");
+  overlay.classList.remove("show");
+}
+
+// WHATSAPP INTEGRATION
+document.getElementById("orderForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("custAddress").value.trim();
+  const landmark = document.getElementById("custLandmark").value.trim();
+
+  const itemsText = cart.map((i, index) => {
+    const p = products.find(x => x.id === i.id);
+    return `${index + 1}. ${p.name}\n   Quantity: ${i.qty} kg\n   Price Range: ${p.priceText} / kg`;
+  }).join("\n\n");
+
+  const msg = `Hello FishCop.com!\nI would like to place an order:\n\n${itemsText}\n\n*Customer Details:*\n• Name: ${name}\n• Contact: ${phone}\n• Address: ${address}${landmark ? `\n• Landmark: ${landmark}` : ''}\n\nPlease confirm availability and final price based on today's rate.`;
+
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
+  closeModal();
+});
+
+// EVENT LISTENERS
+filterSelect.addEventListener("change", renderProducts);
+searchInput.addEventListener("input", renderProducts);
+
+document.querySelectorAll(".pill").forEach(pill => {
+  pill.addEventListener("click", () => {
+    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
+    pill.classList.add("active");
+    filterSelect.value = pill.dataset.filter;
+    renderProducts();
   });
 });
+
 document.getElementById("cartBtn").addEventListener("click", openCart);
 document.getElementById("closeCart").addEventListener("click", closeCart);
-overlay.addEventListener("click", closeCart);
-document.getElementById("whatsappOrder").addEventListener("click", orderOnWhatsApp);
-document.getElementById("contactWhatsapp").addEventListener("click", e => {
-  e.preventDefault();
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello FishCop.com! I want to know today's fresh fish availability.")}`,"_blank");
-});
-document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("mainNav").classList.toggle("open"));
-document.querySelectorAll("#mainNav a").forEach(a=>a.addEventListener("click",()=>document.getElementById("mainNav").classList.remove("open")));
+document.getElementById("openCheckoutModal").addEventListener("click", openModal);
+document.getElementById("closeModal").addEventListener("click", closeModal);
+overlay.addEventListener("click", () => { closeCart(); closeModal(); });
 
+document.getElementById("heroWhatsappBtn").addEventListener("click", (e) => {
+  e.preventDefault();
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello FishCop.com! I want to inquire about today's fresh fish availability.")}`, "_blank");
+});
+
+document.getElementById("contactWhatsapp").addEventListener("click", (e) => {
+  e.preventDefault();
+  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello FishCop.com! I want to order fresh fish.")}`, "_blank");
+});
+
+document.getElementById("menuBtn").addEventListener("click", () => {
+  document.getElementById("mainNav").classList.toggle("open");
+});
+
+// INITIALIZE
 renderProducts();
 renderCart();
