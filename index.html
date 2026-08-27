@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="FishCop.com - Fresh seafood & fish delivered directly to your doorstep. Easy WhatsApp ordering.">
-  <title>FishCop.com | Fresh Fish & Seafood Delivered</title>
-  <link rel="icon" type="image/png" href="assets/fishcop-logo.png">
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FishCop.com | Fresh Seafood Delivered to Your Doorstep</title>
+  <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,192 +13,182 @@
 
   <!-- HEADER -->
   <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#home" aria-label="FishCop.com home">
-        <img src="assets/fishcop-logo.png" alt="FishCop.com logo" class="main-logo">
+    <div class="container header-wrap">
+      <a href="#" class="brand-logo">
+        <img src="assets/fishcop-logo.png" alt="FishCop.com Logo" class="logo-img">
       </a>
-      <button class="menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
-      <nav id="mainNav">
+
+      <nav class="main-nav" id="mainNav">
         <a href="#home">Home</a>
-        <a href="#shop">Shop</a>
+        <a href="#products">Shop</a>
         <a href="#why-us">Why Us</a>
         <a href="#about">About</a>
         <a href="#contact">Contact</a>
-        <button class="cart-btn" id="cartBtn">🛒 Cart (<span id="cartCount">0</span>)</button>
       </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" id="cartBtn">
+          🛒 <span>Cart</span> (<span id="cartCount">0</span>)
+        </button>
+        <button class="menu-btn" id="menuBtn">☰</button>
+      </div>
     </div>
   </header>
 
-  <main>
-    <!-- HERO SECTION -->
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <p class="eyebrow">⚓ 100% FRESH & HYGIENIC SEAFOOD</p>
-          <h1>Fresh Fish.<br><span>Delivered Fresh.</span></h1>
-          <p class="hero-text">Carefully selected, cleaned, and delivered straight to your kitchen. Place your order easily via WhatsApp!</p>
-          <div class="hero-actions">
-            <a class="btn primary" href="#shop">Explore Catch</a>
-            <a class="btn secondary-wa" id="heroWhatsappBtn" href="#">Order via WhatsApp</a>
-          </div>
-          <div class="trust-row">
-            <div><strong>Fresh</strong><span>Daily Catch</span></div>
-            <div><strong>Cleaned</strong><span>Ready to Cook</span></div>
-            <div><strong>Doorstep</strong><span>Fast Delivery</span></div>
-          </div>
-        </div>
-        <div class="hero-art">
-          <div class="fish-orb">
-            <img src="assets/fishcop-logo.png" alt="FishCop Badge">
-          </div>
-          <div class="floating-card card-one">❄️ Chilled & Packed</div>
-          <div class="floating-card card-two">📲 Easy WhatsApp Order</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SEARCH & CATEGORIES -->
-    <section class="shop section" id="shop">
-      <div class="container">
-        <div class="shop-top">
-          <div class="section-heading left">
-            <p class="eyebrow">OUR SELECTION</p>
-            <h2>Fresh Catch Today</h2>
-            <p>Prices are estimates per kg and may vary based on exact size, weight, and daily market rates.</p>
-          </div>
-          
-          <!-- SEARCH & FILTER CONTROLS -->
-          <div class="controls-wrapper">
-            <input type="text" id="searchInput" placeholder="Search fish, prawns, seafood..." class="search-box">
-            <select id="filterSelect" class="filter-dropdown" aria-label="Filter products">
-              <option value="All">All Categories</option>
-              <option value="Sea Fish">Sea Fish</option>
-              <option value="Freshwater Fish">Freshwater Fish</option>
-              <option value="Prawns">Prawns</option>
-              <option value="Premium">Premium</option>
-            </select>
-          </div>
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <span class="sub-badge">⚓ 100% FRESH & HYGIENIC SEAFOOD</span>
+        <h1>Fresh Fish. <br><span>Delivered Fresh.</span></h1>
+        <p>Carefully selected, cleaned, and delivered straight to your kitchen. Place your order easily via WhatsApp!</p>
+        
+        <div class="hero-btns">
+          <a href="#products" class="btn btn-primary">Explore Catch</a>
+          <a href="#" class="btn btn-whatsapp" id="heroWhatsappBtn">Order via WhatsApp</a>
         </div>
 
-        <!-- CATEGORY QUICK PILLS -->
-        <div class="category-pills">
-          <button class="pill active" data-filter="All">All</button>
-          <button class="pill" data-filter="Sea Fish">Sea Fish</button>
-          <button class="pill" data-filter="Freshwater Fish">Freshwater</button>
-          <button class="pill" data-filter="Prawns">Prawns</button>
-          <button class="pill" data-filter="Premium">Premium</button>
+        <div class="hero-features">
+          <div><strong>Fresh</strong><span>Daily Catch</span></div>
+          <div><strong>Cleaned</strong><span>Ready to Cook</span></div>
+          <div><strong>Doorstep</strong><span>Fast Delivery</span></div>
         </div>
+      </div>
 
-        <div class="product-grid" id="productGrid"></div>
-      </div>
-    </section>
-
-    <!-- WHY CHOOSE US -->
-    <section class="why section" id="why-us">
-      <div class="container">
-        <div class="section-heading">
-          <p class="eyebrow">WHY FISHCOP?</p>
-          <h2>Quality You Can Trust</h2>
+      <div class="hero-image-box">
+        <div class="circle-bg">
+          <img id="heroSlider" src="assets/hero-1.png" alt="Fresh Fish Badge" class="badge-img" style="transition: opacity 0.5s ease-in-out;">
+          <div class="floating-badge top">❄️ Chilled & Packed</div>
+          <div class="floating-badge bottom">📲 Easy WhatsApp Order</div>
         </div>
-        <div class="why-grid">
-          <article><div class="icon">🐟</div><h3>Fresh & Quality Fish</h3><p>Selected directly to ensure maximum freshness for your cooking.</p></article>
-          <article><div class="icon">🧼</div><h3>Hygienically Cleaned</h3><p>Processed and washed carefully so it's instantly kitchen-ready.</p></article>
-          <article><div class="icon">💬</div><h3>Easy WhatsApp Order</h3><p>No tedious checkouts. Simply confirm your cart over WhatsApp chat.</p></article>
-          <article><div class="icon">🚚</div><h3>Doorstep Delivery</h3><p>Convenient home delivery straight to your location.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT SECTION -->
-    <section class="about section" id="about">
-      <div class="container about-grid">
-        <div class="about-badge">
-          <img src="assets/fishcop-logo.png" alt="FishCop.com logo">
-        </div>
-        <div>
-          <p class="eyebrow">ABOUT FISHCOP.COM</p>
-          <h2>Your Local Seafood Partner</h2>
-          <p>FishCop.com is dedicated to supplying high quality, fresh edible fish directly to fish lovers. We bridge the gap between fresh catch availability and convenient home delivery.</p>
-          <p>Choose your favorite products, add quantity, and place orders directly with our team on WhatsApp for transparent daily pricing.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT SECTION -->
-    <section class="contact section" id="contact">
-      <div class="container contact-box">
-        <div>
-          <p class="eyebrow">HAVE QUESTIONS OR CUSTOM ORDERS?</p>
-          <h2>Fresh seafood is just a message away.</h2>
-          <p>Order or inquiry on WhatsApp: <strong>+91 91670 05060</strong></p>
-        </div>
-        <a class="btn primary-wa" id="contactWhatsapp" href="#">💬 Chat on WhatsApp</a>
-      </div>
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div class="container footer-grid">
-      <div>
-        <img src="assets/fishcop-logo.png" alt="FishCop.com" class="footer-logo">
-        <p>Fresh Fish & Seafood Delivered Fresh.</p>
-      </div>
-      <div>
-        <strong>Quick Links</strong>
-        <a href="#shop">Shop Fish</a>
-        <a href="#why-us">Why FishCop</a>
-        <a href="#about">About Us</a>
-        <a href="#contact">Contact</a>
-      </div>
-      <div>
-        <strong>Order Support</strong>
-        <p>WhatsApp: +91 91670 05060</p>
-        <p>Service Area: Local Delivery</p>
       </div>
     </div>
-    <div class="copyright">© 2026 FishCop.com. All rights reserved.</div>
+  </section>
+
+  <!-- PRODUCT SECTION -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="section-tag">OUR SELECTION</span>
+          <h2>Today's Fresh Catch</h2>
+        </div>
+        <div class="controls">
+          <input type="text" id="searchInput" placeholder="Search fish, prawns..." />
+          <select id="filterSelect">
+            <option value="All">All Categories</option>
+            <option value="Prawns">Prawns</option>
+            <option value="Sea Fish">Sea Fish</option>
+            <option value="Premium">Premium</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="category-pills">
+        <button class="pill active" data-filter="All">All</button>
+        <button class="pill" data-filter="Prawns">Prawns</button>
+        <button class="pill" data-filter="Sea Fish">Sea Fish</button>
+        <button class="pill" data-filter="Premium">Premium</button>
+      </div>
+
+      <div class="product-grid" id="productGrid">
+        <!-- Products populated dynamically -->
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section class="why-us" id="why-us">
+    <div class="container">
+      <h2 class="text-center">Why Order From FishCop?</h2>
+      <div class="features-grid">
+        <div class="f-card">
+          <div class="f-icon">🌊</div>
+          <h3>Daily Fresh Catch</h3>
+          <p>Direct sourcing ensures you receive only high-quality, fresh seafood.</p>
+        </div>
+        <div class="f-card">
+          <div class="f-icon">🔪</div>
+          <h3>Cleaned & Cut</h3>
+          <p>Hygienically processed and custom-cut, ready for immediate cooking.</p>
+        </div>
+        <div class="f-card">
+          <div class="f-icon">🧊</div>
+          <h3>Chilled Packaging</h3>
+          <p>Packed with temperature-controlled ice packs for optimal freshness.</p>
+        </div>
+        <div class="f-card">
+          <div class="f-icon">💬</div>
+          <h3>Easy WhatsApp Ordering</h3>
+          <p>Quick, simple, and direct communication for instant order confirmation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT & FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <h3>FishCop.com</h3>
+        <p>Delivering fresh, cleaned, and premium seafood straight to your doorstep.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Shop</a></li>
+          <li><a href="#why-us">Why Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Direct Order</h4>
+        <p>WhatsApp: +91 91670 05060</p>
+        <a href="#" class="btn btn-whatsapp-sm" id="contactWhatsapp">Order Now on WhatsApp</a>
+      </div>
+    </div>
+    <div class="copyright text-center">
+      <p>&copy; 2026 FishCop.com. All Rights Reserved.</p>
+    </div>
   </footer>
 
   <!-- CART SIDEBAR -->
-  <aside class="cart-panel" id="cartPanel" aria-label="Shopping cart">
-    <div class="cart-head">
-      <h3>Your Cart 🛒</h3>
-      <button id="closeCart">×</button>
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="closeCart">&times;</button>
     </div>
-    <div id="cartItems" class="cart-items">
-      <p class="empty">Your cart is empty.</p>
-    </div>
+    <div class="cart-items" id="cartItems"></div>
     <div class="cart-footer">
-      <div class="price-note">
-        <span>Pricing Note:</span>
-        <small>Final price will be confirmed on WhatsApp based on daily weight and availability.</small>
-      </div>
-      <button class="btn primary-wa full" id="openCheckoutModal">Proceed to Order Details</button>
+      <button class="btn btn-primary btn-block" id="openCheckoutModal">Proceed to Details</button>
     </div>
-  </aside>
+  </div>
 
   <!-- CUSTOMER DETAILS MODAL -->
-  <div class="modal-dialog" id="customerModal">
+  <div class="modal" id="customerModal">
     <div class="modal-content">
       <div class="modal-header">
         <h3>Customer Details</h3>
-        <button id="closeModal">×</button>
+        <button id="closeModal">&times;</button>
       </div>
       <form id="orderForm">
-        <label>Full Name *</label>
-        <input type="text" id="custName" placeholder="e.g. Rahul Sharma" required>
-
-        <label>Mobile / WhatsApp Number *</label>
-        <input type="tel" id="custPhone" placeholder="e.g. 9876543210" required>
-
-        <label>Delivery Address *</label>
-        <textarea id="custAddress" rows="2" placeholder="Building, Flat No, Street Address..." required></textarea>
-
-        <label>Landmark (Optional)</label>
-        <input type="text" id="custLandmark" placeholder="Near station / park...">
-
-        <button type="submit" class="btn primary-wa full mt-15">📲 Send Order via WhatsApp</button>
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" id="custName" required placeholder="Enter your full name">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Contact Number *</label>
+          <input type="tel" id="custPhone" required placeholder="Enter 10-digit mobile number">
+        </div>
+        <div class="form-group">
+          <label>Delivery Address *</label>
+          <textarea id="custAddress" required placeholder="Flat / House No, Building, Street, Area"></textarea>
+        </div>
+        <div class="form-group">
+          <label>Landmark (Optional)</label>
+          <input type="text" id="custLandmark" placeholder="Near school, park, station etc.">
+        </div>
+        <button type="submit" class="btn btn-whatsapp btn-block">Send Order via WhatsApp</button>
       </form>
     </div>
   </div>
