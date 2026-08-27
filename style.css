@@ -163,7 +163,6 @@ body {
   justify-content: center;
 }
 
-/* Image side se na kate isliye scale 0.85 kar diya hai */
 .badge-img {
   width: 100%;
   height: 100%;
@@ -192,32 +191,74 @@ body {
 .floating-badge.top-right { top: 25px; right: -15px; }
 .floating-badge.bottom-left { bottom: 25px; left: -15px; }
 .floating-badge.bottom-right { bottom: 20px; right: -15px; }
-/* PRODUCTS */
+
+/* CATEGORIES SECTION STYLING */
+.categories-section {
+  background: #004b5a;
+  padding: 40px 0 60px;
+  margin-top: 40px;
+}
+
+.categories-header h2 {
+  color: #ffffff;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 800;
+  margin-bottom: 25px;
+}
+
+.categories-box {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 20px 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  gap: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+.category-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  width: 130px;
+  transition: transform 0.2s;
+}
+
+.category-item:hover {
+  transform: translateY(-5px);
+}
+
+.cat-img-wrap {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.cat-img-wrap img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.category-item span {
+  font-size: 13px;
+  font-weight: 700;
+  color: #004b5a;
+  line-height: 1.2;
+}
+
+/* PRODUCTS SECTION & ALIGNMENT FIX */
 .products-section { padding: 80px 0; }
 .section-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 25px; }
 .section-tag { font-size: 12px; font-weight: 800; color: var(--primary); letter-spacing: 1px; }
 .section-head h2 { font-size: 32px; font-weight: 800; }
-
-.controls { display: flex; gap: 12px; }
-.controls input, .controls select {
-  padding: 10px 16px;
-  border: 1px solid #cbd5e1;
-  border-radius: 8px;
-  outline: none;
-  font-size: 14px;
-}
-
-.category-pills { display: flex; gap: 10px; margin-bottom: 30px; }
-.pill {
-  padding: 8px 20px;
-  border: 1px solid #cbd5e1;
-  background: #fff;
-  border-radius: 30px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 14px;
-}
-.pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
 
 .product-grid {
   display: grid;
@@ -231,31 +272,46 @@ body {
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0,0,0,0.05);
   border: 1px solid #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
   transition: transform 0.25s, box-shadow 0.25s;
 }
+
 .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
 
-.product-img { height: 200px; width: 100%; background: #f1f5f9; overflow: hidden; }
-.product-img img { width: 100%; height: 100%; object-fit: cover; }
+.product-img {
+  height: 190px;
+  width: 100%;
+  background: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
 
-.product-info { padding: 20px; }
-.tag { font-size: 11px; font-weight: 700; color: var(--primary); background: #e0f2fe; padding: 4px 10px; border-radius: 4px; }
-.product-info h3 { font-size: 18px; font-weight: 700; margin: 8px 0 4px; }
-.local-names { font-size: 13px; color: var(--gray); margin-bottom: 8px; font-weight: 500; }
-.product-info p { font-size: 13px; color: #64748b; margin-bottom: 15px; height: 38px; overflow: hidden; }
+.product-img img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
 
-.price-row { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 12px; }
-.price { font-size: 16px; font-weight: 800; color: #0f172a; }
-.price small { font-size: 12px; color: var(--gray); font-weight: 500; }
+.product-info {
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
 
-.add-btn {
-  background: var(--primary);
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+  margin-top: auto;
 }
 
 /* WHY US */
