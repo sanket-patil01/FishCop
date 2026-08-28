@@ -455,3 +455,88 @@ body {
     width: 100%;
   }
 }
+/* 1. TRUST BAR ENHANCEMENT & GAP REDUCTION */
+.trust-bar-section {
+  margin-top: -20px;
+  position: relative;
+  z-index: 30;
+  padding-bottom: 10px; /* Reduced gap below the box */
+}
+
+.trust-bar-box {
+  background: #ffffff;
+  border-radius: 60px;
+  padding: 28px 45px; /* Increased box size */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+}
+
+.products-section {
+  padding-top: 20px !important; /* Reduced top gap for Best Selling section */
+}
+
+/* 2. PREMIUM PRODUCT CARD STYLING (PRICE, TEXT & BUTTON) */
+.product-card {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* Local Language Subtext (Hindi / Marathi) */
+.product-card .lang-text,
+.product-card p:nth-of-type(1) {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+/* Main Description Text (Smaller & Cleaner) */
+.product-card .product-desc,
+.product-card p:nth-of-type(2) {
+  font-size: 12px;
+  line-height: 1.4;
+  color: #64748b;
+  margin-bottom: 14px;
+}
+
+/* Price Section Styling */
+.product-card .price,
+.product-card .product-price {
+  font-size: 16px;
+  font-weight: 800;
+  color: #0284c7; /* Vibrant Teal/Blue */
+  letter-spacing: -0.2px;
+}
+
+/* Premium Add + Button Styling */
+.product-card button,
+.product-card .add-btn {
+  background: #0284c7;
+  color: #ffffff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.25);
+}
+
+.product-card button:hover,
+.product-card .add-btn:hover {
+  background: #0369a1;
+  transform: scale(1.03);
+}
