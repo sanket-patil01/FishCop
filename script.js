@@ -1,4 +1,4 @@
-// ORIGINAL BEST SELLING PRODUCTS (Default View)
+// PRODUCTS DATA SETUP
 const products = [
   {
     id: 1,
@@ -50,7 +50,6 @@ const products = [
   }
 ];
 
-// EXTRA SEA WATER FISHES (Loaded when clicking Sea Water Category)
 const seaWaterProducts = [
   {
     id: 101,
@@ -151,7 +150,6 @@ const seaWaterProducts = [
 ];
 
 let cart = [];
-let currentDisplayList = [...products];
 
 // RENDER PRODUCTS FUNCTION
 function renderProducts(productList) {
@@ -166,7 +164,7 @@ function renderProducts(productList) {
       <div class="product-info">
         <span class="product-tag">${item.filterCat}</span>
         <h3>${item.name}</h3>
-        <p class="lang-text">${item.localName}</p>
+        <p class="lang-text" style="font-size:12px; color:#64748b; margin-bottom:4px;">${item.localName}</p>
         <p class="product-desc">${item.desc}</p>
         <div class="product-card-footer">
           <span class="price">₹${item.priceMin} - ₹${item.priceMax} /${item.unit}</span>
@@ -177,7 +175,7 @@ function renderProducts(productList) {
   `).join('');
 }
 
-// CATEGORY CLICK FILTER (FOR PRODUCT CATEGORIES BANNER CARDS)
+// CATEGORY CLICK FILTER
 function filterCategory(catKey) {
   const shopSection = document.getElementById("shop");
   if (shopSection) {
@@ -233,7 +231,7 @@ function removeFromCart(index) {
   updateCart();
 }
 
-// INITIAL DOM EVENTS
+// INITIAL LOAD
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(products);
 
