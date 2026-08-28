@@ -1,4 +1,4 @@
-// PRODUCTS DATA SETUP
+// ORIGINAL PRODUCTS DATA (With updated .jpg image paths)
 const products = [
   {
     id: 1,
@@ -10,31 +10,31 @@ const products = [
     priceMax: 680,
     unit: "kg",
     desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "assets/prawns.png"
+    image: "assets/white-prawns.jpg"
   },
   {
     id: 2,
-    name: "Sea Water Black Tiger Prawns",
-    localName: "टाइगर झींगा / समुद्री कोळंबी",
+    name: "Karandi / Tiny Prawns",
+    localName: "करंदी कोळंबी",
     category: "prawns",
     filterCat: "Prawns",
-    priceMin: 850,
-    priceMax: 1400,
+    priceMin: 350,
+    priceMax: 600,
     unit: "kg",
-    desc: "Premium quality large Sea Water Black Tiger Prawns, ideal for grilling and curries.",
-    image: "assets/tiger-prawns.png"
+    desc: "Fresh Karandi prawns, crisp texture ideal for traditional gravy and sukka.",
+    image: "assets/kardi-prawns.jpg"
   },
   {
     id: 3,
-    name: "Surmai / King Fish Steaks",
-    localName: "सुरमई",
+    name: "Rawas (Indian Salmon)",
+    localName: "रावस",
     category: "seawater",
-    filterCat: "Premium",
-    priceMin: 850,
-    priceMax: 1800,
+    filterCat: "Sea Fish",
+    priceMin: 900,
+    priceMax: 1900,
     unit: "kg",
-    desc: "Seafood lover favorite steak cut king fish with high protein content.",
-    image: "assets/surmai.png"
+    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
+    image: "assets/rawas.jpg"
   },
   {
     id: 4,
@@ -46,10 +46,11 @@ const products = [
     priceMax: 2100,
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "assets/silver-pomfret.png"
+    image: "assets/pomfret.jpg"
   }
 ];
 
+// EXTRA 8 SEA WATER FISHES (Loaded on Category Click)
 const seaWaterProducts = [
   {
     id: 101,
@@ -175,7 +176,7 @@ function renderProducts(productList) {
   `).join('');
 }
 
-// CATEGORY CLICK FILTER
+// CATEGORY CLICK FILTER (FOR TOP CATEGORY CARDS)
 function filterCategory(catKey) {
   const shopSection = document.getElementById("shop");
   if (shopSection) {
@@ -231,7 +232,7 @@ function removeFromCart(index) {
   updateCart();
 }
 
-// INITIAL LOAD
+// INITIAL DOM EVENTS
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(products);
 
@@ -267,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Cart & Modal logic
+  // Cart & Modal handlers
   const cartBtn = document.getElementById("cartBtn");
   const closeCart = document.getElementById("closeCart");
   const cartPanel = document.getElementById("cartPanel");
@@ -308,7 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // WhatsApp Order Submission
+  // WhatsApp Order Form Submission
   const orderForm = document.getElementById("orderForm");
   if (orderForm) {
     orderForm.addEventListener("submit", (e) => {
