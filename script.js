@@ -8,27 +8,27 @@ const products = [
     priceText: "₹570.00 – ₹680.00",
     unit: "kg",
     desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "assets/white-prawns.jpg"
+    image: "assets/white-prawns.png"
   },
   {
     id: 2,
-    name: "Small Wet Peeled Shrimps / Kardi",
+    name: "Small wet peeled Shrimps / Kardi / Karandi / Aambad",
     localName: "करंदी / करदी / आंबड",
     filterCat: "Prawns",
-    priceText: "₹350.00 – ₹600.00",
+    priceText: "₹450.00 – ₹850.00",
     unit: "kg",
     desc: "Fresh small peeled prawns, perfect for authentic gravy and sukka.",
-    image: "assets/kardi-prawns.jpg"
+    image: "assets/peeled-shrimps.png"
   },
   {
     id: 3,
-    name: "Rawas",
+    name: "Rawas (Indian Salmon)",
     localName: "रावस",
     filterCat: "Sea Fish",
     priceText: "₹900.00 – ₹1,900.00",
     unit: "kg",
     desc: "Fresh Rawas (Indian Salmon), premium selection ideal for fry and curry.",
-    image: "assets/rawas.jpg"
+    image: "assets/rawas.png"
   },
   {
     id: 4,
@@ -38,7 +38,7 @@ const products = [
     priceText: "₹995.00 – ₹2,100.00",
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "assets/pomfret.jpg"
+    image: "assets/silver-pomfret.png"
   }
 ];
 
@@ -133,7 +133,7 @@ const prawnsProducts = [
     name: "Freshwater / Cultivated White Prawns",
     localName: "तलावातली कोळंबी, तालाब का झींगा",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹570.00 – ₹680.00",
     unit: "kg",
     desc: "Freshwater cultivated white prawns, juicy and tender.",
     image: "assets/white-prawns.png"
@@ -143,7 +143,7 @@ const prawnsProducts = [
     name: "Tiger Prawns",
     localName: "कोळंबी, झींगा",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹1,170.00 – ₹1,790.00",
     unit: "kg",
     desc: "Large size tiger prawns, perfect for grilling and special curries.",
     image: "assets/tiger-prawns.png"
@@ -153,9 +153,9 @@ const prawnsProducts = [
     name: "Freshwater / Cultivated Tiger Prawns",
     localName: "गोड पाण्याची कोळंबी, झींगा",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹590.00 – ₹1,190.00",
     unit: "kg",
-    desc: "Fresh farm-cultivated tiger prawns with sweet flavor.",
+    desc: "Fresh farm-cultivated tiger prawns with rich flavor.",
     image: "assets/fishwater-tiger-prawns.png"
   },
   {
@@ -163,27 +163,28 @@ const prawnsProducts = [
     name: "Seawater Prawns",
     localName: "समुद्री कोळंबी, झींगा",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹670.00 – ₹990.00",
     unit: "kg",
-    desc: "Wild caught seawater prawns, rich in ocean flavor.",
+    desc: "Wild caught seawater prawns, rich in natural ocean taste.",
     image: "assets/seawater-prawns.png"
   },
   {
     id: 205,
-    name: "Scampi",
+    name: "Scampi | Large",
     localName: "स्कैम्पी",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹790.00",
+    oldPriceText: "₹900.00",
     unit: "kg",
     desc: "Premium jumbo freshwater scampi prawns.",
     image: "assets/scampi.png"
   },
   {
     id: 206,
-    name: "Small wet peeled Shrimps / Kardi",
+    name: "Small wet peeled Shrimps / Kardi / Karandi / Aambad",
     localName: "करंदी / करदी / आंबड",
     filterCat: "Prawns",
-    priceText: "Price update pending",
+    priceText: "₹450.00 – ₹850.00",
     unit: "kg",
     desc: "Fresh peeled small shrimps, great for authentic gravy and sukka.",
     image: "assets/peeled-shrimps.png"
@@ -194,6 +195,10 @@ let cart = JSON.parse(localStorage.getItem('fishcop_cart')) || [];
 
 // CARD HTML GENERATOR
 function generateCardHTML(item) {
+  const priceDisplay = item.oldPriceText 
+    ? `<span style="text-decoration: line-through; color: #94a3b8; font-size: 0.9em; margin-right: 4px;">${item.oldPriceText}</span> ${item.priceText} /${item.unit}` 
+    : `${item.priceText} /${item.unit}`;
+
   return `
     <div class="product-card">
       <div class="product-img-wrap">
@@ -205,7 +210,7 @@ function generateCardHTML(item) {
         <p class="lang-text" style="font-size:12px; color:#64748b; margin-bottom:4px;">${item.localName}</p>
         <p class="product-desc">${item.desc}</p>
         <div class="product-card-footer">
-          <span class="price">${item.priceText} ${item.priceText.includes('₹') ? '/' + item.unit : ''}</span>
+          <span class="price">${priceDisplay}</span>
           <button class="add-btn" onclick="addToCart(${item.id})">Add +</button>
         </div>
       </div>
