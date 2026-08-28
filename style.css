@@ -540,3 +540,90 @@ body {
   background: #0369a1;
   transform: scale(1.03);
 }
+/* PREMIUM FILTER PILLS & SEARCH CONTROLS */
+
+/* 1. Category Pills (All, Prawns, Sea Fish, Premium Buttons) */
+.category-pills {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 30px 0;
+  flex-wrap: wrap;
+}
+
+.category-pills .pill, 
+.category-pills button {
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  color: #334155;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  outline: none;
+}
+
+.category-pills .pill.active, 
+.category-pills .pill:hover,
+.category-pills button:hover {
+  background: #0284c7;
+  color: #ffffff;
+  border-color: #0284c7;
+  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+}
+
+/* 2. Controls Wrap (Search Box & Dropdown) */
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Search Input Box */
+.controls input[type="text"] {
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 25px;
+  font-size: 14px;
+  outline: none;
+  background: #ffffff;
+  color: #1e293b;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+  min-width: 200px;
+}
+
+.controls input[type="text"]:focus {
+  border-color: #0284c7;
+  box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+/* Category Select Dropdown */
+.controls select {
+  padding: 10px 16px;
+  border: 1px solid #cbd5e1;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  outline: none;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+  transition: all 0.2s ease;
+}
+
+.controls select:focus {
+  border-color: #0284c7;
+}
+
+/* Section Head Alignment */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
