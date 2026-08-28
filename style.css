@@ -913,3 +913,97 @@ body {
 .floating-social-bar .fs-yt { background-color: #cd2019; }
 .floating-social-bar .fs-li { background-color: #0077b5; }
 
+
+
+/* ================= TOP ANNOUNCEMENT BAR (MOVING TEXT) ================= */
+.top-bar {
+  background-color: #0b435b;
+  color: #ffffff;
+  font-size: 13px;
+  padding: 8px 0;
+  overflow: hidden;
+  position: relative;
+  z-index: 1000;
+}
+
+.top-bar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.top-marquee-box {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: 20px;
+}
+
+.top-marquee-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marqueeText 18s linear infinite;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.top-marquee-text strong {
+  color: #38bdf8;
+}
+
+@keyframes marqueeText {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}
+
+.top-marquee-box:hover .top-marquee-text {
+  animation-play-state: paused;
+}
+
+.track-order-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ================= FIXED VERTICAL FLOATING SOCIAL BAR (SVG ICONS) ================= */
+.floating-social-bar {
+  position: fixed;
+  right: 0;
+  top: 35%;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.floating-social-bar a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  transition: all 0.2s ease-in-out;
+}
+
+.floating-social-bar a svg {
+  width: 20px;
+  height: 20px;
+  fill: #ffffff;
+}
+
+.floating-social-bar a:hover {
+  width: 50px;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+.floating-social-bar .fs-fb { background-color: #1877f2; }
+.floating-social-bar .fs-tw { background-color: #1da1f2; }
+.floating-social-bar .fs-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.floating-social-bar .fs-yt { background-color: #ff0000; }
+.floating-social-bar .fs-li { background-color: #0a66c2; }
