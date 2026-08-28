@@ -1007,3 +1007,19 @@ body {
 .floating-social-bar .fs-ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
 .floating-social-bar .fs-yt { background-color: #ff0000; }
 .floating-social-bar .fs-li { background-color: #0a66c2; }
+
+
+
+/* ================= HEADER LOGO STYLING ================= */
+.logo-img {
+  height: 55px; /* Perfect desktop height */
+  width: auto;  /* Aspect ratio automatic maintain rahega */
+  object-fit: contain;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .logo-img {
+    height: 42px; /* Mobile screens ke liye perfect size */
+  }
+}
