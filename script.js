@@ -26,52 +26,146 @@ if (heroImgElement) {
 }
 
 // PRODUCTS
+// PRODUCTS DATA (1200x900 PNG Images)
 const products = [
   {
     id: 1,
-    name: "Freshwater / Cultivated White Prawns",
-    marathi: "तलावातील कोळंबी",
-    hindi: "तालाब का झींगा",
-    category: "Prawns",
-    image: "assets/white-prawns.jpg",
-    priceText: "₹570 – ₹680",
-    unit: "per kg",
-    desc: "Freshwater cultivated white prawns, selected for freshness and quality."
+    name: "Silver Pomfret",
+    localName: "पापलेट / पॉम्फलेट",
+    category: "seawater",
+    filterCat: "Premium",
+    priceMin: 995,
+    priceMax: 2100,
+    unit: "kg",
+    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
+    image: "assets/silver-pomfret.png"
   },
   {
     id: 2,
     name: "Rawas (Indian Salmon)",
-    marathi: "रावस",
-    hindi: "",
-    category: "Sea Fish",
-    image: "assets/rawas.jpg",
-    priceText: "₹900 – ₹1,900",
-    unit: "per kg",
-    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry."
+    localName: "रावस",
+    category: "seawater",
+    filterCat: "Sea Fish",
+    priceMin: 900,
+    priceMax: 1900,
+    unit: "kg",
+    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
+    image: "assets/rawas.png"
   },
   {
     id: 3,
-    name: "Silver Pomfret",
-    marathi: "पापलेट",
-    hindi: "पॉपफलेट",
-    category: "Premium",
-    image: "assets/pomfret.jpg",
-    priceText: "₹995 – ₹2,100",
-    unit: "per kg",
-    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry."
+    name: "Black Pomfret",
+    localName: "हलवा / काला पापलेट",
+    category: "seawater",
+    filterCat: "Sea Fish",
+    priceMin: 650,
+    priceMax: 1400,
+    unit: "kg",
+    desc: "Rich in flavor, firm texture, best suitable for tawa fry and rich curry.",
+    image: "assets/black-pomfret.png"
   },
   {
     id: 4,
-    name: "Small Wet Peeled Shrimps (Kardi / Karandi / Aambad)",
-    marathi: "कोळंबी / करडी / करंडी / आंबाड",
-    hindi: "छोटी झींगा",
-    category: "Prawns",
-    image: "assets/kardi-prawns.jpg",
-    priceText: "₹450 – ₹950",
-    unit: "per kg",
-    desc: "Cleaned and peeled small shrimps, great for quick recipes and gravies."
+    name: "Surmai (King Fish)",
+    localName: "सुरमई",
+    category: "seawater",
+    filterCat: "Premium",
+    priceMin: 850,
+    priceMax: 1800,
+    unit: "kg",
+    desc: "Seafood lover favorite steak cut king fish with high protein content.",
+    image: "assets/surmai.png"
+  },
+  {
+    id: 5,
+    name: "Pink Perch (Rani)",
+    localName: "रानी मासा",
+    category: "seawater",
+    filterCat: "Sea Fish",
+    priceMin: 350,
+    priceMax: 700,
+    unit: "kg",
+    desc: "Mild flavored pink perch, cleaned and scaled for daily home cooking.",
+    image: "assets/pink-perch.png"
+  },
+  {
+    id: 6,
+    name: "Tuna",
+    localName: "कुप्पा / टूना",
+    category: "seawater",
+    filterCat: "Sea Fish",
+    priceMin: 400,
+    priceMax: 850,
+    unit: "kg",
+    desc: "Fleshy and meaty texture fish, high in Omega-3 fatty acids.",
+    image: "assets/tuna.png"
+  },
+  {
+    id: 7,
+    name: "Bombay Duck (Bumbla)",
+    localName: "बोंबिल",
+    category: "seawater",
+    filterCat: "Sea Fish",
+    priceMin: 280,
+    priceMax: 550,
+    unit: "kg",
+    desc: "Fresh soft Bombay Duck fish, soft meat best enjoyed crisp rava fried.",
+    image: "assets/bombay-duck.png"
+  },
+  {
+    id: 8,
+    name: "Greater Amberjack",
+    localName: "अंबरजैक",
+    category: "seawater",
+    filterCat: "Premium",
+    priceMin: 750,
+    priceMax: 1500,
+    unit: "kg",
+    desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
+    image: "assets/greater-amberjack.png"
   }
 ];
+
+// FILTER CATEGORY FUNCTION (CLICK HANDLER FOR CATEGORY CARDS)
+function filterCategory(catKey) {
+  const shopSection = document.getElementById("shop");
+  if (shopSection) {
+    shopSection.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Filter products by category tag
+  const filteredProducts = products.filter(item => item.category === catKey || catKey === 'all');
+  renderProducts(filteredProducts);
+}
+
+// RENDER PRODUCTS TO GRID
+function renderProducts(productList) {
+  const grid = document.getElementById("productGrid");
+  if (!grid) return;
+
+  grid.innerHTML = productList.map(item => `
+    <div class="product-card">
+      <div class="product-img-wrap">
+        <img src="${item.image}" alt="${item.name}">
+      </div>
+      <div class="product-info">
+        <span class="product-tag">${item.filterCat}</span>
+        <h3>${item.name}</h3>
+        <p class="lang-text">${item.localName}</p>
+        <p class="product-desc">${item.desc}</p>
+        <div class="product-card-footer">
+          <span class="price">₹${item.priceMin} - ₹${item.priceMax} /${item.unit}</span>
+          <button class="add-btn" onclick="addToCart(${item.id})">Add +</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Initial render
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts(products);
+});
 
 let cart = JSON.parse(localStorage.getItem("fishcopCart") || "[]");
 
