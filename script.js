@@ -1,7 +1,59 @@
-// PRODUCTS DATA (INCLUDES OLD + NEW 8 FISHES)
+// ORIGINAL BEST SELLING PRODUCTS (Default View)
 const products = [
   {
     id: 1,
+    name: "Freshwater / Cultivated White Prawns",
+    localName: "तलावातील कोळंबी / तालाब का झींगा",
+    category: "prawns",
+    filterCat: "Prawns",
+    priceMin: 570,
+    priceMax: 680,
+    unit: "kg",
+    desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
+    image: "assets/prawns.png"
+  },
+  {
+    id: 2,
+    name: "Sea Water Black Tiger Prawns",
+    localName: "टाइगर झींगा / समुद्री कोळंबी",
+    category: "prawns",
+    filterCat: "Prawns",
+    priceMin: 850,
+    priceMax: 1400,
+    unit: "kg",
+    desc: "Premium quality large Sea Water Black Tiger Prawns, ideal for grilling and curries.",
+    image: "assets/tiger-prawns.png"
+  },
+  {
+    id: 3,
+    name: "Surmai / King Fish Steaks",
+    localName: "सुरमई",
+    category: "seawater",
+    filterCat: "Premium",
+    priceMin: 850,
+    priceMax: 1800,
+    unit: "kg",
+    desc: "Seafood lover favorite steak cut king fish with high protein content.",
+    image: "assets/surmai.png"
+  },
+  {
+    id: 4,
+    name: "Silver Pomfret Whole",
+    localName: "पापलेट / पॉम्फलेट",
+    category: "seawater",
+    filterCat: "Premium",
+    priceMin: 995,
+    priceMax: 2100,
+    unit: "kg",
+    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
+    image: "assets/silver-pomfret.png"
+  }
+];
+
+// EXTRA SEA WATER FISHES (Loaded when clicking Sea Water Category)
+const seaWaterProducts = [
+  {
+    id: 101,
     name: "Silver Pomfret",
     localName: "पापलेट / पॉम्फलेट",
     category: "seawater",
@@ -13,7 +65,7 @@ const products = [
     image: "assets/silver-pomfret.png"
   },
   {
-    id: 2,
+    id: 102,
     name: "Rawas (Indian Salmon)",
     localName: "रावस",
     category: "seawater",
@@ -25,7 +77,7 @@ const products = [
     image: "assets/rawas.png"
   },
   {
-    id: 3,
+    id: 103,
     name: "Black Pomfret",
     localName: "हलवा / काला पापलेट",
     category: "seawater",
@@ -37,7 +89,7 @@ const products = [
     image: "assets/black-pomfret.png"
   },
   {
-    id: 4,
+    id: 104,
     name: "Surmai (King Fish)",
     localName: "सुरमई",
     category: "seawater",
@@ -49,7 +101,7 @@ const products = [
     image: "assets/surmai.png"
   },
   {
-    id: 5,
+    id: 105,
     name: "Pink Perch (Rani)",
     localName: "रानी मासा",
     category: "seawater",
@@ -61,7 +113,7 @@ const products = [
     image: "assets/pink-perch.png"
   },
   {
-    id: 6,
+    id: 106,
     name: "Tuna",
     localName: "कुप्पा / टूना",
     category: "seawater",
@@ -73,7 +125,7 @@ const products = [
     image: "assets/tuna.png"
   },
   {
-    id: 7,
+    id: 107,
     name: "Bombay Duck (Bumbla)",
     localName: "बोंबिल",
     category: "seawater",
@@ -85,7 +137,7 @@ const products = [
     image: "assets/bombay-duck.png"
   },
   {
-    id: 8,
+    id: 108,
     name: "Greater Amberjack",
     localName: "अंबरजैक",
     category: "seawater",
@@ -95,22 +147,11 @@ const products = [
     unit: "kg",
     desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
     image: "assets/greater-amberjack.png"
-  },
-  {
-    id: 9,
-    name: "Freshwater / Cultivated White Prawns",
-    localName: "तलावातील कोळंबी तालाब का झींगा",
-    category: "prawns",
-    filterCat: "Prawns",
-    priceMin: 570,
-    priceMax: 680,
-    unit: "kg",
-    desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "assets/prawns.png"
   }
 ];
 
 let cart = [];
+let currentDisplayList = [...products];
 
 // RENDER PRODUCTS FUNCTION
 function renderProducts(productList) {
@@ -136,20 +177,27 @@ function renderProducts(productList) {
   `).join('');
 }
 
-// CATEGORY CLICK FILTER (FOR PRODUCT CATEGORIES SECTION)
+// CATEGORY CLICK FILTER (FOR PRODUCT CATEGORIES BANNER CARDS)
 function filterCategory(catKey) {
   const shopSection = document.getElementById("shop");
   if (shopSection) {
     shopSection.scrollIntoView({ behavior: "smooth" });
   }
 
-  const filtered = products.filter(item => item.category === catKey || catKey === 'all');
-  renderProducts(filtered);
+  if (catKey === 'seawater') {
+    renderProducts(seaWaterProducts);
+  } else if (catKey === 'all') {
+    renderProducts(products);
+  } else {
+    const filtered = products.filter(item => item.category === catKey);
+    renderProducts(filtered.length ? filtered : products);
+  }
 }
 
 // CART FUNCTIONALITY
 function addToCart(id) {
-  const product = products.find(p => p.id === id);
+  const allAvailable = [...products, ...seaWaterProducts];
+  const product = allAvailable.find(p => p.id === id);
   if (product) {
     cart.push(product);
     updateCart();
@@ -168,12 +216,12 @@ function updateCart() {
       cartItems.innerHTML = "<p style='padding:15px; text-align:center;'>Your cart is empty.</p>";
     } else {
       cartItems.innerHTML = cart.map((item, index) => `
-        <div style="display:flex; justify-between; align-center; padding:10px 0; border-bottom:1px solid #eee;">
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
           <div>
             <strong>${item.name}</strong><br>
             <small>₹${item.priceMin} - ₹${item.priceMax}</small>
           </div>
-          <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
+          <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">✕</button>
         </div>
       `).join('');
     }
@@ -194,7 +242,8 @@ document.addEventListener("DOMContentLoaded", () => {
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase();
-      const filtered = products.filter(p => 
+      const allAvailable = [...products, ...seaWaterProducts];
+      const filtered = allAvailable.filter(p => 
         p.name.toLowerCase().includes(term) || 
         p.localName.toLowerCase().includes(term)
       );
@@ -202,7 +251,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Pill filter buttons
+  // Filter Pills (All, Prawns, Sea Fish, Premium)
   const pills = document.querySelectorAll(".category-pills .pill");
   pills.forEach(pill => {
     pill.addEventListener("click", () => {
@@ -213,13 +262,14 @@ document.addEventListener("DOMContentLoaded", () => {
       if (filter === "All") {
         renderProducts(products);
       } else {
-        const filtered = products.filter(p => p.filterCat === filter);
+        const allAvailable = [...products, ...seaWaterProducts];
+        const filtered = allAvailable.filter(p => p.filterCat === filter);
         renderProducts(filtered);
       }
     });
   });
 
-  // Cart Panel Handlers
+  // Cart & Modal logic
   const cartBtn = document.getElementById("cartBtn");
   const closeCart = document.getElementById("closeCart");
   const cartPanel = document.getElementById("cartPanel");
