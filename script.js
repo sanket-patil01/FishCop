@@ -1,72 +1,72 @@
-// ORIGINAL PRODUCTS DATA (With updated .jpg image paths)
+// OUR BEST SELLING PRODUCTS (DEFAULT 4 PRODUCTS)
 const products = [
   {
     id: 1,
     name: "Freshwater / Cultivated White Prawns",
-    localName: "तलावातील कोळंबी / तालाब का झींगा",
+    localName: "तलावातली कोळंबी, तालाब का झींगा",
     category: "prawns",
     filterCat: "Prawns",
     priceMin: 570,
     priceMax: 680,
     unit: "kg",
     desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "assets/white-prawns.jpg"
+    image: "./assets/white-prawns.jpg"
   },
   {
     id: 2,
-    name: "Karandi / Tiny Prawns",
-    localName: "करंदी कोळंबी",
+    name: "Small Wet Peeled Shrimps / Kardi",
+    localName: "करंदी / करदी / आंबड",
     category: "prawns",
     filterCat: "Prawns",
     priceMin: 350,
     priceMax: 600,
     unit: "kg",
-    desc: "Fresh Karandi prawns, crisp texture ideal for traditional gravy and sukka.",
-    image: "assets/kardi-prawns.jpg"
+    desc: "Fresh small peeled prawns, perfect for authentic gravy and sukka.",
+    image: "./assets/kardi-prawns.jpg"
   },
   {
     id: 3,
-    name: "Rawas (Indian Salmon)",
+    name: "Rawas",
     localName: "रावस",
     category: "seawater",
     filterCat: "Sea Fish",
     priceMin: 900,
     priceMax: 1900,
     unit: "kg",
-    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
-    image: "assets/rawas.jpg"
+    desc: "Fresh Rawas (Indian Salmon), premium selection ideal for fry and curry.",
+    image: "./assets/rawas.jpg"
   },
   {
     id: 4,
-    name: "Silver Pomfret Whole",
-    localName: "पापलेट / पॉम्फलेट",
+    name: "Silver Pomfret",
+    localName: "पापलेट",
     category: "seawater",
     filterCat: "Premium",
     priceMin: 995,
     priceMax: 2100,
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "assets/pomfret.jpg"
+    image: "./assets/pomfret.jpg"
   }
 ];
 
-// EXTRA 8 SEA WATER FISHES (Loaded on Category Click)
+// EXTRA SEA WATER FISHES (CATEGORY CLICK)
 const seaWaterProducts = [
   {
     id: 101,
     name: "Silver Pomfret",
-    localName: "पापलेट / पॉम्फलेट",
+    localName: "पापलेट",
     category: "seawater",
     filterCat: "Premium",
     priceMin: 995,
     priceMax: 2100,
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "assets/silver-pomfret.png"
+    image: "./assets/pomfret.jpg"
   },
   {
     id: 102,
-    name: "Rawas (Indian Salmon)",
+    name: "Rawas",
     localName: "रावस",
     category: "seawater",
     filterCat: "Sea Fish",
@@ -74,7 +74,7 @@ const seaWaterProducts = [
     priceMax: 1900,
     unit: "kg",
     desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
-    image: "assets/rawas.png"
+    image: "./assets/rawas.jpg"
   },
   {
     id: 103,
@@ -86,7 +86,7 @@ const seaWaterProducts = [
     priceMax: 1400,
     unit: "kg",
     desc: "Rich in flavor, firm texture, best suitable for tawa fry and rich curry.",
-    image: "assets/black-pomfret.png"
+    image: "./assets/black-pomfret.png"
   },
   {
     id: 104,
@@ -98,7 +98,7 @@ const seaWaterProducts = [
     priceMax: 1800,
     unit: "kg",
     desc: "Seafood lover favorite steak cut king fish with high protein content.",
-    image: "assets/surmai.png"
+    image: "./assets/surmai.png"
   },
   {
     id: 105,
@@ -110,7 +110,7 @@ const seaWaterProducts = [
     priceMax: 700,
     unit: "kg",
     desc: "Mild flavored pink perch, cleaned and scaled for daily home cooking.",
-    image: "assets/pink-perch.png"
+    image: "./assets/pink-perch.png"
   },
   {
     id: 106,
@@ -122,7 +122,7 @@ const seaWaterProducts = [
     priceMax: 850,
     unit: "kg",
     desc: "Fleshy and meaty texture fish, high in Omega-3 fatty acids.",
-    image: "assets/tuna.png"
+    image: "./assets/tuna.png"
   },
   {
     id: 107,
@@ -134,7 +134,7 @@ const seaWaterProducts = [
     priceMax: 550,
     unit: "kg",
     desc: "Fresh soft Bombay Duck fish, soft meat best enjoyed crisp rava fried.",
-    image: "assets/bombay-duck.png"
+    image: "./assets/bombay-duck.png"
   },
   {
     id: 108,
@@ -146,13 +146,13 @@ const seaWaterProducts = [
     priceMax: 1500,
     unit: "kg",
     desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
-    image: "assets/greater-amberjack.png"
+    image: "./assets/greater-amberjack.png"
   }
 ];
 
 let cart = [];
 
-// RENDER PRODUCTS FUNCTION
+// RENDER FUNCTION (WITH IMAGE PATH CONTROL & FALLBACK)
 function renderProducts(productList) {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
@@ -160,7 +160,7 @@ function renderProducts(productList) {
   grid.innerHTML = productList.map(item => `
     <div class="product-card">
       <div class="product-img-wrap">
-        <img src="${item.image}" alt="${item.name}">
+        <img src="${item.image}" alt="${item.name}" loading="lazy">
       </div>
       <div class="product-info">
         <span class="product-tag">${item.filterCat}</span>
@@ -176,7 +176,7 @@ function renderProducts(productList) {
   `).join('');
 }
 
-// CATEGORY CLICK FILTER (FOR TOP CATEGORY CARDS)
+// CATEGORY FILTER
 function filterCategory(catKey) {
   const shopSection = document.getElementById("shop");
   if (shopSection) {
@@ -193,7 +193,7 @@ function filterCategory(catKey) {
   }
 }
 
-// CART FUNCTIONALITY
+// CART HANDLERS
 function addToCart(id) {
   const allAvailable = [...products, ...seaWaterProducts];
   const product = allAvailable.find(p => p.id === id);
@@ -232,11 +232,10 @@ function removeFromCart(index) {
   updateCart();
 }
 
-// INITIAL DOM EVENTS
+// INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(products);
 
-  // Search input filter
   const searchInput = document.getElementById("searchInput");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
@@ -250,7 +249,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Filter Pills (All, Prawns, Sea Fish, Premium)
   const pills = document.querySelectorAll(".category-pills .pill");
   pills.forEach(pill => {
     pill.addEventListener("click", () => {
@@ -268,7 +266,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Cart & Modal handlers
   const cartBtn = document.getElementById("cartBtn");
   const closeCart = document.getElementById("closeCart");
   const cartPanel = document.getElementById("cartPanel");
@@ -309,7 +306,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // WhatsApp Order Form Submission
   const orderForm = document.getElementById("orderForm");
   if (orderForm) {
     orderForm.addEventListener("submit", (e) => {
