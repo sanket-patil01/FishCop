@@ -1,1 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prawns & Shrimps | FishCop.com</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
 
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="container header-wrap">
+      <a href="index.html" class="brand-logo">
+        <img src="assets/fishcop-logo.png" alt="FishCop.com Logo" class="logo-img">
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="index.html#shop">Shop</a>
+        <a href="index.html#why-us">Why Us</a>
+        <a href="index.html#contact">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="cart-btn" id="cartBtn">
+          🛒 Cart (<span id="cartCount">0</span>)
+        </button>
+        <button class="menu-btn" id="menuBtn">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PRODUCTS SECTION -->
+  <section class="products-section" style="padding-top: 40px; min-height: 60vh;">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <span class="section-tag">CATEGORY</span>
+          <h2>Prawns & Shrimps</h2>
+        </div>
+        <div class="controls">
+          <input type="text" id="searchInput" placeholder="Search prawns, shrimps..." />
+        </div>
+      </div>
+
+      <!-- GRID CONTAINER FOR 6 PRAWNS -->
+      <div class="product-grid" id="prawnsGrid">
+        <!-- JS inserts 6 products here -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="contact">
+    <div class="container footer-grid">
+      <div>
+        <h3>FishCop.com</h3>
+        <p>Delivering fresh, cleaned, and premium seafood straight to your doorstep.</p>
+      </div>
+      <div>
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="index.html#shop">Shop</a></li>
+          <li><a href="index.html#why-us">Why Us</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Direct Order</h4>
+        <p>WhatsApp: +91 91670 05060</p>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2026 FishCop.com. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-panel" id="cartPanel">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button id="closeCart" style="border:none; background:none; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+      <button class="btn btn-primary btn-block" id="openCheckoutModal">Proceed to Details</button>
+    </div>
+  </div>
+
+  <!-- CUSTOMER DETAILS MODAL -->
+  <div class="modal" id="customerModal">
+    <div class="modal-header">
+      <h3>Customer Details</h3>
+      <button id="closeModal" style="border:none; background:none; font-size:24px; cursor:pointer;">&times;</button>
+    </div>
+    <form id="orderForm">
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="custName" required placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Contact Number *</label>
+        <input type="tel" id="custPhone" required placeholder="Enter 10-digit mobile number">
+      </div>
+      <div class="form-group">
+        <label>Delivery Address *</label>
+        <textarea id="custAddress" required placeholder="Flat / House No, Building, Street, Area"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Landmark (Optional)</label>
+        <input type="text" id="custLandmark" placeholder="Near school, park, station etc.">
+      </div>
+      <button type="submit" class="btn btn-whatsapp btn-block">Send Order via WhatsApp</button>
+    </form>
+  </div>
+
+  <div class="overlay" id="overlay"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
