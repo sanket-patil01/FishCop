@@ -42,7 +42,7 @@ const products = [
   }
 ];
 
-// 8 SEA WATER PRODUCTS (DEDICATED PAGE - seawater.html)
+// 8 SEA WATER PRODUCTS (seawater.html)
 const seaWaterProducts = [
   {
     id: 101,
@@ -126,9 +126,73 @@ const seaWaterProducts = [
   }
 ];
 
+// 6 PRAWNS & SHRIMPS PRODUCTS (prawns-shrimp.html)
+const prawnsProducts = [
+  {
+    id: 201,
+    name: "Freshwater / Cultivated White Prawns",
+    localName: "तलावातली कोळंबी, तालाब का झींगा",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Freshwater cultivated white prawns, juicy and tender.",
+    image: "assets/white-prawns.png"
+  },
+  {
+    id: 202,
+    name: "Tiger Prawns",
+    localName: "कोळंबी, झींगा",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Large size tiger prawns, perfect for grilling and special curries.",
+    image: "assets/tiger-prawns.png"
+  },
+  {
+    id: 203,
+    name: "Freshwater / Cultivated Tiger Prawns",
+    localName: "गोड पाण्याची कोळंबी, झींगा",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Fresh farm-cultivated tiger prawns with sweet flavor.",
+    image: "assets/fishwater-tiger-prawns.png"
+  },
+  {
+    id: 204,
+    name: "Seawater Prawns",
+    localName: "समुद्री कोळंबी, झींगा",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Wild caught seawater prawns, rich in ocean flavor.",
+    image: "assets/seawater-prawns.png"
+  },
+  {
+    id: 205,
+    name: "Scampi",
+    localName: "स्कैम्पी",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Premium jumbo freshwater scampi prawns.",
+    image: "assets/scampi.png"
+  },
+  {
+    id: 206,
+    name: "Small wet peeled Shrimps / Kardi",
+    localName: "करंदी / करदी / आंबड",
+    filterCat: "Prawns",
+    priceText: "Price update pending",
+    unit: "kg",
+    desc: "Fresh peeled small shrimps, great for authentic gravy and sukka.",
+    image: "assets/peeled-shrimps.png"
+  }
+];
+
 let cart = JSON.parse(localStorage.getItem('fishcop_cart')) || [];
 
-// HTML TEMPLATE BUILDER FOR CARDS
+// CARD HTML GENERATOR
 function generateCardHTML(item) {
   return `
     <div class="product-card">
@@ -141,7 +205,7 @@ function generateCardHTML(item) {
         <p class="lang-text" style="font-size:12px; color:#64748b; margin-bottom:4px;">${item.localName}</p>
         <p class="product-desc">${item.desc}</p>
         <div class="product-card-footer">
-          <span class="price">${item.priceText} /${item.unit}</span>
+          <span class="price">${item.priceText} ${item.priceText.includes('₹') ? '/' + item.unit : ''}</span>
           <button class="add-btn" onclick="addToCart(${item.id})">Add +</button>
         </div>
       </div>
@@ -149,10 +213,11 @@ function generateCardHTML(item) {
   `;
 }
 
-// RENDER FUNCTION
+// RENDER ALL PAGES
 function renderGrids(listToRender = null) {
   const homeGrid = document.getElementById("productGrid");
   const seaWaterGrid = document.getElementById("seaWaterGrid");
+  const prawnsGrid = document.getElementById("prawnsGrid");
 
   if (homeGrid) {
     homeGrid.innerHTML = (listToRender || products).map(item => generateCardHTML(item)).join('');
@@ -161,11 +226,15 @@ function renderGrids(listToRender = null) {
   if (seaWaterGrid) {
     seaWaterGrid.innerHTML = (listToRender || seaWaterProducts).map(item => generateCardHTML(item)).join('');
   }
+
+  if (prawnsGrid) {
+    prawnsGrid.innerHTML = (listToRender || prawnsProducts).map(item => generateCardHTML(item)).join('');
+  }
 }
 
-// CART MANAGEMENT
+// CART FUNCTIONS
 function addToCart(id) {
-  const allAvailable = [...products, ...seaWaterProducts];
+  const allAvailable = [...products, ...seaWaterProducts, ...prawnsProducts];
   const product = allAvailable.find(p => p.id === id);
   if (product) {
     cart.push(product);
@@ -207,19 +276,20 @@ function removeFromCart(index) {
   saveAndUpdateCart();
 }
 
-// DOM INITIALIZATION
+// INIT
 document.addEventListener("DOMContentLoaded", () => {
   renderGrids();
   updateCartUI();
 
-  // Search Filter
+  // Search
   const searchInput = document.getElementById("searchInput");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase();
-      const isSeaPage = !!document.getElementById("seaWaterGrid");
-      const sourceList = isSeaPage ? seaWaterProducts : products;
-      
+      let sourceList = products;
+      if (document.getElementById("seaWaterGrid")) sourceList = seaWaterProducts;
+      if (document.getElementById("prawnsGrid")) sourceList = prawnsProducts;
+
       const filtered = sourceList.filter(p => 
         p.name.toLowerCase().includes(term) || 
         p.localName.toLowerCase().includes(term)
@@ -245,7 +315,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // Modal & Cart Toggles
+  // Modal & Cart UI Events
   const cartBtn = document.getElementById("cartBtn");
   const closeCart = document.getElementById("closeCart");
   const cartPanel = document.getElementById("cartPanel");
@@ -294,7 +364,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // WhatsApp Order Submission
+  // WhatsApp Submission
   const orderForm = document.getElementById("orderForm");
   if (orderForm) {
     orderForm.addEventListener("submit", (e) => {
