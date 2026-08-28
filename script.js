@@ -1,333 +1,3 @@
-// OUR BEST SELLING PRODUCTS (DEFAULT 4 PRODUCTS)
-const products = [
-  {
-    id: 1,
-    name: "Freshwater / Cultivated White Prawns",
-    localName: "तलावातली कोळंबी, तालाब का झींगा",
-    category: "prawns",
-    filterCat: "Prawns",
-    priceMin: 570,
-    priceMax: 680,
-    unit: "kg",
-    desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "./assets/white-prawns.jpg"
-  },
-  {
-    id: 2,
-    name: "Small Wet Peeled Shrimps / Kardi",
-    localName: "करंदी / करदी / आंबड",
-    category: "prawns",
-    filterCat: "Prawns",
-    priceMin: 350,
-    priceMax: 600,
-    unit: "kg",
-    desc: "Fresh small peeled prawns, perfect for authentic gravy and sukka.",
-    image: "./assets/kardi-prawns.jpg"
-  },
-  {
-    id: 3,
-    name: "Rawas",
-    localName: "रावस",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 900,
-    priceMax: 1900,
-    unit: "kg",
-    desc: "Fresh Rawas (Indian Salmon), premium selection ideal for fry and curry.",
-    image: "./assets/rawas.jpg"
-  },
-  {
-    id: 4,
-    name: "Silver Pomfret",
-    localName: "पापलेट",
-    category: "seawater",
-    filterCat: "Premium",
-    priceMin: 995,
-    priceMax: 2100,
-    unit: "kg",
-    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "./assets/pomfret.jpg"
-  }
-];
-
-// EXTRA SEA WATER FISHES (CATEGORY CLICK)
-const seaWaterProducts = [
-  {
-    id: 101,
-    name: "Silver Pomfret",
-    localName: "पापलेट",
-    category: "seawater",
-    filterCat: "Premium",
-    priceMin: 995,
-    priceMax: 2100,
-    unit: "kg",
-    desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "./assets/pomfret.jpg"
-  },
-  {
-    id: 102,
-    name: "Rawas",
-    localName: "रावस",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 900,
-    priceMax: 1900,
-    unit: "kg",
-    desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
-    image: "./assets/rawas.jpg"
-  },
-  {
-    id: 103,
-    name: "Black Pomfret",
-    localName: "हलवा / काला पापलेट",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 650,
-    priceMax: 1400,
-    unit: "kg",
-    desc: "Rich in flavor, firm texture, best suitable for tawa fry and rich curry.",
-    image: "./assets/black-pomfret.png"
-  },
-  {
-    id: 104,
-    name: "Surmai (King Fish)",
-    localName: "सुरमई",
-    category: "seawater",
-    filterCat: "Premium",
-    priceMin: 850,
-    priceMax: 1800,
-    unit: "kg",
-    desc: "Seafood lover favorite steak cut king fish with high protein content.",
-    image: "./assets/surmai.png"
-  },
-  {
-    id: 105,
-    name: "Pink Perch (Rani)",
-    localName: "रानी मासा",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 350,
-    priceMax: 700,
-    unit: "kg",
-    desc: "Mild flavored pink perch, cleaned and scaled for daily home cooking.",
-    image: "./assets/pink-perch.png"
-  },
-  {
-    id: 106,
-    name: "Tuna",
-    localName: "कुप्पा / टूना",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 400,
-    priceMax: 850,
-    unit: "kg",
-    desc: "Fleshy and meaty texture fish, high in Omega-3 fatty acids.",
-    image: "./assets/tuna.png"
-  },
-  {
-    id: 107,
-    name: "Bombay Duck (Bumbla)",
-    localName: "बोंबिल",
-    category: "seawater",
-    filterCat: "Sea Fish",
-    priceMin: 280,
-    priceMax: 550,
-    unit: "kg",
-    desc: "Fresh soft Bombay Duck fish, soft meat best enjoyed crisp rava fried.",
-    image: "./assets/bombay-duck.png"
-  },
-  {
-    id: 108,
-    name: "Greater Amberjack",
-    localName: "अंबरजैक",
-    category: "seawater",
-    filterCat: "Premium",
-    priceMin: 750,
-    priceMax: 1500,
-    unit: "kg",
-    desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
-    image: "./assets/greater-amberjack.png"
-  }
-];
-
-let cart = [];
-
-// RENDER FUNCTION (WITH IMAGE PATH CONTROL & FALLBACK)
-function renderProducts(productList) {
-  const grid = document.getElementById("productGrid");
-  if (!grid) return;
-
-  grid.innerHTML = productList.map(item => `
-    <div class="product-card">
-      <div class="product-img-wrap">
-        <img src="${item.image}" alt="${item.name}" loading="lazy">
-      </div>
-      <div class="product-info">
-        <span class="product-tag">${item.filterCat}</span>
-        <h3>${item.name}</h3>
-        <p class="lang-text" style="font-size:12px; color:#64748b; margin-bottom:4px;">${item.localName}</p>
-        <p class="product-desc">${item.desc}</p>
-        <div class="product-card-footer">
-          <span class="price">₹${item.priceMin} - ₹${item.priceMax} /${item.unit}</span>
-          <button class="add-btn" onclick="addToCart(${item.id})">Add +</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-// CATEGORY FILTER
-function filterCategory(catKey) {
-  const shopSection = document.getElementById("shop");
-  if (shopSection) {
-    shopSection.scrollIntoView({ behavior: "smooth" });
-  }
-
-  if (catKey === 'seawater') {
-    renderProducts(seaWaterProducts);
-  } else if (catKey === 'all') {
-    renderProducts(products);
-  } else {
-    const filtered = products.filter(item => item.category === catKey);
-    renderProducts(filtered.length ? filtered : products);
-  }
-}
-
-// CART HANDLERS
-function addToCart(id) {
-  const allAvailable = [...products, ...seaWaterProducts];
-  const product = allAvailable.find(p => p.id === id);
-  if (product) {
-    cart.push(product);
-    updateCart();
-    alert(`${product.name} added to cart!`);
-  }
-}
-
-function updateCart() {
-  const cartCount = document.getElementById("cartCount");
-  const cartItems = document.getElementById("cartItems");
-  
-  if (cartCount) cartCount.innerText = cart.length;
-  
-  if (cartItems) {
-    if (cart.length === 0) {
-      cartItems.innerHTML = "<p style='padding:15px; text-align:center;'>Your cart is empty.</p>";
-    } else {
-      cartItems.innerHTML = cart.map((item, index) => `
-        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #eee;">
-          <div>
-            <strong>${item.name}</strong><br>
-            <small>₹${item.priceMin} - ₹${item.priceMax}</small>
-          </div>
-          <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-weight:bold;">✕</button>
-        </div>
-      `).join('');
-    }
-  }
-}
-
-function removeFromCart(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
-
-// INITIALIZATION
-document.addEventListener("DOMContentLoaded", () => {
-  renderProducts(products);
-
-  const searchInput = document.getElementById("searchInput");
-  if (searchInput) {
-    searchInput.addEventListener("input", (e) => {
-      const term = e.target.value.toLowerCase();
-      const allAvailable = [...products, ...seaWaterProducts];
-      const filtered = allAvailable.filter(p => 
-        p.name.toLowerCase().includes(term) || 
-        p.localName.toLowerCase().includes(term)
-      );
-      renderProducts(filtered);
-    });
-  }
-
-  const pills = document.querySelectorAll(".category-pills .pill");
-  pills.forEach(pill => {
-    pill.addEventListener("click", () => {
-      pills.forEach(p => p.classList.remove("active"));
-      pill.classList.add("active");
-      
-      const filter = pill.getAttribute("data-filter");
-      if (filter === "All") {
-        renderProducts(products);
-      } else {
-        const allAvailable = [...products, ...seaWaterProducts];
-        const filtered = allAvailable.filter(p => p.filterCat === filter);
-        renderProducts(filtered);
-      }
-    });
-  });
-
-  const cartBtn = document.getElementById("cartBtn");
-  const closeCart = document.getElementById("closeCart");
-  const cartPanel = document.getElementById("cartPanel");
-  const overlay = document.getElementById("overlay");
-  const openCheckoutModal = document.getElementById("openCheckoutModal");
-  const customerModal = document.getElementById("customerModal");
-  const closeModal = document.getElementById("closeModal");
-
-  if (cartBtn && cartPanel && overlay) {
-    cartBtn.addEventListener("click", () => {
-      cartPanel.classList.add("open");
-      overlay.classList.add("active");
-    });
-  }
-
-  if (closeCart && cartPanel && overlay) {
-    closeCart.addEventListener("click", () => {
-      cartPanel.classList.remove("open");
-      overlay.classList.remove("active");
-    });
-  }
-
-  if (openCheckoutModal && customerModal) {
-    openCheckoutModal.addEventListener("click", () => {
-      if (cart.length === 0) {
-        alert("Please add items to cart first!");
-        return;
-      }
-      cartPanel.classList.remove("open");
-      customerModal.classList.add("open");
-    });
-  }
-
-  if (closeModal && customerModal && overlay) {
-    closeModal.addEventListener("click", () => {
-      customerModal.classList.remove("open");
-      overlay.classList.remove("active");
-    });
-  }
-
-  const orderForm = document.getElementById("orderForm");
-  if (orderForm) {
-    orderForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const name = document.getElementById("custName").value;
-      const phone = document.getElementById("custPhone").value;
-      const address = document.getElementById("custAddress").value;
-      const landmark = document.getElementById("custLandmark").value;
-
-      let itemsText = cart.map(i => `- ${i.name} (₹${i.priceMin}-₹${i.priceMax})`).join("%0A");
-
-      const message = `*New Order from FishCop.com*%0A%0A` +
-        `*Customer Details:*%0A` +
-        `Name: ${name}%0A` +
-        `Phone: ${phone}%0A` +
-        `Address: ${address}${landmark ? ' (' + landmark + ')' : ''}%0A%0A` +
-        `*Order Items:*%0A${itemsText}`;
-
-      window.open(`https://wa.me/919167005060?text=${message}`, '_blank');
-    });
-  }
-});
 // BEST SELLING PRODUCTS (HOME PAGE ONLY)
 const products = [
   {
@@ -338,7 +8,7 @@ const products = [
     priceText: "₹570.00 – ₹680.00",
     unit: "kg",
     desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
-    image: "./assets/white-prawns.jpg"
+    image: "assets/white-prawns.jpg"
   },
   {
     id: 2,
@@ -348,7 +18,7 @@ const products = [
     priceText: "₹350.00 – ₹600.00",
     unit: "kg",
     desc: "Fresh small peeled prawns, perfect for authentic gravy and sukka.",
-    image: "./assets/kardi-prawns.jpg"
+    image: "assets/kardi-prawns.jpg"
   },
   {
     id: 3,
@@ -358,7 +28,7 @@ const products = [
     priceText: "₹900.00 – ₹1,900.00",
     unit: "kg",
     desc: "Fresh Rawas (Indian Salmon), premium selection ideal for fry and curry.",
-    image: "./assets/rawas.jpg"
+    image: "assets/rawas.jpg"
   },
   {
     id: 4,
@@ -368,11 +38,11 @@ const products = [
     priceText: "₹995.00 – ₹2,100.00",
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "./assets/pomfret.jpg"
+    image: "assets/pomfret.jpg"
   }
 ];
 
-// 8 SEA WATER PRODUCTS (DEDICATED PAGE: seawater.html)
+// 8 SEA WATER PRODUCTS (DEDICATED PAGE - seawater.html)
 const seaWaterProducts = [
   {
     id: 101,
@@ -382,7 +52,7 @@ const seaWaterProducts = [
     priceText: "₹995.00 – ₹2,100.00",
     unit: "kg",
     desc: "Fresh and premium Silver Pomfret, perfect for frying and tasty curry.",
-    image: "./assets/silver-pomfret.png"
+    image: "assets/silver-pomfret.png"
   },
   {
     id: 102,
@@ -392,7 +62,7 @@ const seaWaterProducts = [
     priceText: "₹900.00 – ₹1,900.00",
     unit: "kg",
     desc: "Fresh Rawas (Indian Salmon), premium quality selection ideal for fry and curry.",
-    image: "./assets/rawas.png"
+    image: "assets/rawas.png"
   },
   {
     id: 103,
@@ -402,7 +72,7 @@ const seaWaterProducts = [
     priceText: "₹595.00 – ₹1,190.00",
     unit: "kg",
     desc: "Rich in flavor, firm texture, best suitable for tawa fry and rich curry.",
-    image: "./assets/black-pomfret.png"
+    image: "assets/black-pomfret.png"
   },
   {
     id: 104,
@@ -412,7 +82,7 @@ const seaWaterProducts = [
     priceText: "₹995.00 – ₹1,990.00",
     unit: "kg",
     desc: "Seafood lover favorite steak cut king fish with high protein content.",
-    image: "./assets/surmai.png"
+    image: "assets/surmai.png"
   },
   {
     id: 105,
@@ -422,7 +92,7 @@ const seaWaterProducts = [
     priceText: "₹590.00 – ₹885.00",
     unit: "kg",
     desc: "Mild flavored pink perch, cleaned and scaled for daily home cooking.",
-    image: "./assets/pink-perch.png"
+    image: "assets/pink-perch.png"
   },
   {
     id: 106,
@@ -432,7 +102,7 @@ const seaWaterProducts = [
     priceText: "₹690.00 – ₹900.00",
     unit: "kg",
     desc: "Fleshy and meaty texture fish, high in Omega-3 fatty acids.",
-    image: "./assets/tuna.png"
+    image: "assets/tuna.png"
   },
   {
     id: 107,
@@ -442,7 +112,7 @@ const seaWaterProducts = [
     priceText: "₹395.00 – ₹710.00",
     unit: "kg",
     desc: "Fresh soft Bombay Duck fish, soft meat best enjoyed crisp rava fried.",
-    image: "./assets/bombay-duck.png"
+    image: "assets/bombay-duck.png"
   },
   {
     id: 108,
@@ -452,13 +122,13 @@ const seaWaterProducts = [
     priceText: "₹850.00 – ₹900.00",
     unit: "kg",
     desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
-    image: "./assets/greater-amberjack.png"
+    image: "assets/greater-amberjack.png"
   }
 ];
 
 let cart = JSON.parse(localStorage.getItem('fishcop_cart')) || [];
 
-// TEMPLATE BUILDER FOR PRODUCT CARDS
+// HTML TEMPLATE BUILDER FOR CARDS
 function generateCardHTML(item) {
   return `
     <div class="product-card">
@@ -479,21 +149,21 @@ function generateCardHTML(item) {
   `;
 }
 
-// RENDER LOGIC BASED ON PAGE
-function initProducts() {
+// RENDER FUNCTION
+function renderGrids(listToRender = null) {
   const homeGrid = document.getElementById("productGrid");
   const seaWaterGrid = document.getElementById("seaWaterGrid");
 
   if (homeGrid) {
-    homeGrid.innerHTML = products.map(item => generateCardHTML(item)).join('');
+    homeGrid.innerHTML = (listToRender || products).map(item => generateCardHTML(item)).join('');
   }
 
   if (seaWaterGrid) {
-    seaWaterGrid.innerHTML = seaWaterProducts.map(item => generateCardHTML(item)).join('');
+    seaWaterGrid.innerHTML = (listToRender || seaWaterProducts).map(item => generateCardHTML(item)).join('');
   }
 }
 
-// CART MANAGEMENT WITH LOCALSTORAGE (PERSISTS ACROSS PAGES)
+// CART MANAGEMENT
 function addToCart(id) {
   const allAvailable = [...products, ...seaWaterProducts];
   const product = allAvailable.find(p => p.id === id);
@@ -537,27 +207,45 @@ function removeFromCart(index) {
   saveAndUpdateCart();
 }
 
-// INITIALIZATION & EVENT LISTENERS
+// DOM INITIALIZATION
 document.addEventListener("DOMContentLoaded", () => {
-  initProducts();
+  renderGrids();
   updateCartUI();
 
-  // Search filter
+  // Search Filter
   const searchInput = document.getElementById("searchInput");
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       const term = e.target.value.toLowerCase();
-      const allAvailable = [...products, ...seaWaterProducts];
-      const filtered = allAvailable.filter(p => 
+      const isSeaPage = !!document.getElementById("seaWaterGrid");
+      const sourceList = isSeaPage ? seaWaterProducts : products;
+      
+      const filtered = sourceList.filter(p => 
         p.name.toLowerCase().includes(term) || 
         p.localName.toLowerCase().includes(term)
       );
-      const grid = document.getElementById("productGrid") || document.getElementById("seaWaterGrid");
-      if (grid) grid.innerHTML = filtered.map(item => generateCardHTML(item)).join('');
+      renderGrids(filtered);
     });
   }
 
-  // Cart Modal & Overlay Events
+  // Category Pills (index.html)
+  const pills = document.querySelectorAll(".category-pills .pill");
+  pills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      pills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      
+      const filter = pill.getAttribute("data-filter");
+      if (filter === "All") {
+        renderGrids(products);
+      } else {
+        const filtered = products.filter(p => p.filterCat === filter);
+        renderGrids(filtered);
+      }
+    });
+  });
+
+  // Modal & Cart Toggles
   const cartBtn = document.getElementById("cartBtn");
   const closeCart = document.getElementById("closeCart");
   const cartPanel = document.getElementById("cartPanel");
@@ -565,6 +253,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const openCheckoutModal = document.getElementById("openCheckoutModal");
   const customerModal = document.getElementById("customerModal");
   const closeModal = document.getElementById("closeModal");
+  const menuBtn = document.getElementById("menuBtn");
+  const mainNav = document.getElementById("mainNav");
+
+  if (menuBtn && mainNav) {
+    menuBtn.addEventListener("click", () => {
+      mainNav.classList.toggle("active");
+    });
+  }
 
   if (cartBtn && cartPanel && overlay) {
     cartBtn.addEventListener("click", () => {
@@ -587,14 +283,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
       cartPanel.classList.remove("open");
-      customerModal.style.display = "block";
       customerModal.classList.add("open");
     });
   }
 
   if (closeModal && customerModal && overlay) {
     closeModal.addEventListener("click", () => {
-      customerModal.style.display = "none";
       customerModal.classList.remove("open");
       overlay.classList.remove("active");
     });
