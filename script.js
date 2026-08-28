@@ -1,32 +1,4 @@
-const WHATSAPP_NUMBER = "919167005060";
-
-// HERO 7-IMAGE SLIDER
-const heroImages = [
-  "assets/hero-1.png",
-  "assets/hero-2.png",
-  "assets/hero-3.png",
-  "assets/hero-4.png",
-  "assets/hero-5.png",
-  "assets/hero-6.png",
-  "assets/hero-7.png"
-];
-
-let heroIndex = 0;
-const heroImgElement = document.getElementById("heroSlider");
-
-if (heroImgElement) {
-  setInterval(() => {
-    heroImgElement.style.opacity = "0";
-    setTimeout(() => {
-      heroIndex = (heroIndex + 1) % heroImages.length;
-      heroImgElement.src = heroImages[heroIndex];
-      heroImgElement.style.opacity = "1";
-    }, 400);
-  }, 2500);
-}
-
-// PRODUCTS
-// PRODUCTS DATA (1200x900 PNG Images)
+// PRODUCTS DATA (INCLUDES OLD + NEW 8 FISHES)
 const products = [
   {
     id: 1,
@@ -123,22 +95,24 @@ const products = [
     unit: "kg",
     desc: "Premium grade firm sea fish, excellent choice for grilling and curries.",
     image: "assets/greater-amberjack.png"
+  },
+  {
+    id: 9,
+    name: "Freshwater / Cultivated White Prawns",
+    localName: "तलावातील कोळंबी तालाब का झींगा",
+    category: "prawns",
+    filterCat: "Prawns",
+    priceMin: 570,
+    priceMax: 680,
+    unit: "kg",
+    desc: "Freshwater cultivated white prawns, selected for freshness and quality.",
+    image: "assets/prawns.png"
   }
 ];
 
-// FILTER CATEGORY FUNCTION (CLICK HANDLER FOR CATEGORY CARDS)
-function filterCategory(catKey) {
-  const shopSection = document.getElementById("shop");
-  if (shopSection) {
-    shopSection.scrollIntoView({ behavior: "smooth" });
-  }
+let cart = [];
 
-  // Filter products by category tag
-  const filteredProducts = products.filter(item => item.category === catKey || catKey === 'all');
-  renderProducts(filteredProducts);
-}
-
-// RENDER PRODUCTS TO GRID
+// RENDER PRODUCTS FUNCTION
 function renderProducts(productList) {
   const grid = document.getElementById("productGrid");
   if (!grid) return;
@@ -162,177 +136,150 @@ function renderProducts(productList) {
   `).join('');
 }
 
-// Initial render
+// CATEGORY CLICK FILTER (FOR PRODUCT CATEGORIES SECTION)
+function filterCategory(catKey) {
+  const shopSection = document.getElementById("shop");
+  if (shopSection) {
+    shopSection.scrollIntoView({ behavior: "smooth" });
+  }
+
+  const filtered = products.filter(item => item.category === catKey || catKey === 'all');
+  renderProducts(filtered);
+}
+
+// CART FUNCTIONALITY
+function addToCart(id) {
+  const product = products.find(p => p.id === id);
+  if (product) {
+    cart.push(product);
+    updateCart();
+    alert(`${product.name} added to cart!`);
+  }
+}
+
+function updateCart() {
+  const cartCount = document.getElementById("cartCount");
+  const cartItems = document.getElementById("cartItems");
+  
+  if (cartCount) cartCount.innerText = cart.length;
+  
+  if (cartItems) {
+    if (cart.length === 0) {
+      cartItems.innerHTML = "<p style='padding:15px; text-align:center;'>Your cart is empty.</p>";
+    } else {
+      cartItems.innerHTML = cart.map((item, index) => `
+        <div style="display:flex; justify-between; align-center; padding:10px 0; border-bottom:1px solid #eee;">
+          <div>
+            <strong>${item.name}</strong><br>
+            <small>₹${item.priceMin} - ₹${item.priceMax}</small>
+          </div>
+          <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer;">✕</button>
+        </div>
+      `).join('');
+    }
+  }
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCart();
+}
+
+// INITIAL DOM EVENTS
 document.addEventListener("DOMContentLoaded", () => {
   renderProducts(products);
-});
 
-let cart = JSON.parse(localStorage.getItem("fishcopCart") || "[]");
+  // Search input filter
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      const term = e.target.value.toLowerCase();
+      const filtered = products.filter(p => 
+        p.name.toLowerCase().includes(term) || 
+        p.localName.toLowerCase().includes(term)
+      );
+      renderProducts(filtered);
+    });
+  }
 
-const productGrid = document.getElementById("productGrid");
-const filterSelect = document.getElementById("filterSelect");
-const searchInput = document.getElementById("searchInput");
-const cartPanel = document.getElementById("cartPanel");
-const customerModal = document.getElementById("customerModal");
-const overlay = document.getElementById("overlay");
-
-function renderProducts() {
-  const filter = filterSelect ? filterSelect.value : "All";
-  const query = searchInput ? searchInput.value.toLowerCase().trim() : "";
-
-  const filtered = products.filter(p => {
-    const matchesCategory = filter === "All" || p.category === filter;
-    const matchesSearch = p.name.toLowerCase().includes(query) || 
-                          (p.marathi && p.marathi.toLowerCase().includes(query)) ||
-                          (p.hindi && p.hindi.toLowerCase().includes(query));
-    return matchesCategory && matchesSearch;
+  // Pill filter buttons
+  const pills = document.querySelectorAll(".category-pills .pill");
+  pills.forEach(pill => {
+    pill.addEventListener("click", () => {
+      pills.forEach(p => p.classList.remove("active"));
+      pill.classList.add("active");
+      
+      const filter = pill.getAttribute("data-filter");
+      if (filter === "All") {
+        renderProducts(products);
+      } else {
+        const filtered = products.filter(p => p.filterCat === filter);
+        renderProducts(filtered);
+      }
+    });
   });
 
-  if (!filtered.length) {
-    productGrid.innerHTML = '<p style="grid-column:1/-1; text-align:center; padding:30px;">No fish products found matching your search.</p>';
-    return;
+  // Cart Panel Handlers
+  const cartBtn = document.getElementById("cartBtn");
+  const closeCart = document.getElementById("closeCart");
+  const cartPanel = document.getElementById("cartPanel");
+  const overlay = document.getElementById("overlay");
+  const openCheckoutModal = document.getElementById("openCheckoutModal");
+  const customerModal = document.getElementById("customerModal");
+  const closeModal = document.getElementById("closeModal");
+
+  if (cartBtn && cartPanel && overlay) {
+    cartBtn.addEventListener("click", () => {
+      cartPanel.classList.add("open");
+      overlay.classList.add("active");
+    });
   }
 
-  productGrid.innerHTML = filtered.map(p => `
-    <article class="product-card">
-      <div class="product-img"><img src="${p.image}" alt="${p.name}" loading="lazy"></div>
-      <div class="product-info">
-        <span class="tag">${p.category}</span>
-        <h3>${p.name}</h3>
-        <div class="local-names">
-          ${p.marathi ? `<span>${p.marathi}</span>` : ""}
-          ${p.hindi ? `<span>${p.hindi}</span>` : ""}
-        </div>
-        <p>${p.desc}</p>
-        <div class="price-row">
-          <span class="price">${p.priceText} <small>/ kg</small></span>
-          <button class="add-btn" onclick="addToCart(${p.id})">Add +</button>
-        </div>
-      </div>
-    </article>
-  `).join("");
-}
-
-function addToCart(id) {
-  const found = cart.find(i => i.id === id);
-  if (found) found.qty++;
-  else cart.push({ id, qty: 1 });
-  saveCart();
-  openCart();
-}
-
-function saveCart() {
-  localStorage.setItem("fishcopCart", JSON.stringify(cart));
-  renderCart();
-}
-
-function renderCart() {
-  const count = cart.reduce((sum, i) => sum + i.qty, 0);
-  document.getElementById("cartCount").textContent = count;
-  const items = cart.map(i => ({ ...products.find(p => p.id === i.id), qty: i.qty }));
-  const box = document.getElementById("cartItems");
-
-  if (!items.length) {
-    box.innerHTML = '<p class="empty">Your cart is empty.</p>';
-  } else {
-    box.innerHTML = items.map(i => `
-      <div class="cart-line">
-        <div>
-          <h4>${i.name}</h4>
-          <p>${i.priceText} / kg</p>
-          <div class="qty">
-            <button onclick="changeQty(${i.id}, -1)">−</button>
-            <strong>${i.qty} kg</strong>
-            <button onclick="changeQty(${i.id}, 1)">+</button>
-            <button class="remove" onclick="removeItem(${i.id})">Remove</button>
-          </div>
-        </div>
-      </div>
-    `).join("");
+  if (closeCart && cartPanel && overlay) {
+    closeCart.addEventListener("click", () => {
+      cartPanel.classList.remove("open");
+      overlay.classList.remove("active");
+    });
   }
-}
 
-function changeQty(id, delta) {
-  const item = cart.find(i => i.id === id);
-  if (!item) return;
-  item.qty += delta;
-  if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
-  saveCart();
-}
-
-function removeItem(id) {
-  cart = cart.filter(i => i.id !== id);
-  saveCart();
-}
-
-function openCart() { cartPanel.classList.add("open"); overlay.classList.add("show"); }
-function closeCart() { cartPanel.classList.remove("open"); overlay.classList.remove("show"); }
-
-function openModal() {
-  if (!cart.length) {
-    alert("Please add at least one product to your cart first.");
-    return;
+  if (openCheckoutModal && customerModal) {
+    openCheckoutModal.addEventListener("click", () => {
+      if (cart.length === 0) {
+        alert("Please add items to cart first!");
+        return;
+      }
+      cartPanel.classList.remove("open");
+      customerModal.classList.add("open");
+    });
   }
-  closeCart();
-  customerModal.classList.add("open");
-  overlay.classList.add("show");
-}
 
-function closeModal() {
-  customerModal.classList.remove("open");
-  overlay.classList.remove("show");
-}
+  if (closeModal && customerModal && overlay) {
+    closeModal.addEventListener("click", () => {
+      customerModal.classList.remove("open");
+      overlay.classList.remove("active");
+    });
+  }
 
-document.getElementById("orderForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById("custName").value.trim();
-  const phone = document.getElementById("custPhone").value.trim();
-  const address = document.getElementById("custAddress").value.trim();
-  const landmark = document.getElementById("custLandmark").value.trim();
+  // WhatsApp Order Submission
+  const orderForm = document.getElementById("orderForm");
+  if (orderForm) {
+    orderForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const name = document.getElementById("custName").value;
+      const phone = document.getElementById("custPhone").value;
+      const address = document.getElementById("custAddress").value;
+      const landmark = document.getElementById("custLandmark").value;
 
-  const itemsText = cart.map((i, index) => {
-    const p = products.find(x => x.id === i.id);
-    return `${index + 1}. ${p.name}\n   Quantity: ${i.qty} kg\n   Price Range: ${p.priceText} / kg`;
-  }).join("\n\n");
+      let itemsText = cart.map(i => `- ${i.name} (₹${i.priceMin}-₹${i.priceMax})`).join("%0A");
 
-  const msg = `Hello FishCop.com!\nI would like to place an order:\n\n${itemsText}\n\n*Customer Details:*\n• Name: ${name}\n• Contact: ${phone}\n• Address: ${address}${landmark ? `\n• Landmark: ${landmark}` : ''}\n\nPlease confirm availability and final price based on today's rate.`;
+      const message = `*New Order from FishCop.com*%0A%0A` +
+        `*Customer Details:*%0A` +
+        `Name: ${name}%0A` +
+        `Phone: ${phone}%0A` +
+        `Address: ${address}${landmark ? ' (' + landmark + ')' : ''}%0A%0A` +
+        `*Order Items:*%0A${itemsText}`;
 
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, "_blank");
-  closeModal();
+      window.open(`https://wa.me/919167005060?text=${message}`, '_blank');
+    });
+  }
 });
-
-if (filterSelect) filterSelect.addEventListener("change", renderProducts);
-if (searchInput) searchInput.addEventListener("input", renderProducts);
-
-document.querySelectorAll(".pill").forEach(pill => {
-  pill.addEventListener("click", () => {
-    document.querySelectorAll(".pill").forEach(p => p.classList.remove("active"));
-    pill.classList.add("active");
-    if (filterSelect) filterSelect.value = pill.dataset.filter;
-    renderProducts();
-  });
-});
-
-document.getElementById("cartBtn").addEventListener("click", openCart);
-document.getElementById("closeCart").addEventListener("click", closeCart);
-document.getElementById("openCheckoutModal").addEventListener("click", openModal);
-document.getElementById("closeModal").addEventListener("click", closeModal);
-overlay.addEventListener("click", () => { closeCart(); closeModal(); });
-
-document.getElementById("heroWhatsappBtn").addEventListener("click", (e) => {
-  e.preventDefault();
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello FishCop.com! I want to inquire about today's fresh fish availability.")}`, "_blank");
-});
-
-document.getElementById("contactWhatsapp").addEventListener("click", (e) => {
-  e.preventDefault();
-  window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hello FishCop.com! I want to order fresh fish.")}`, "_blank");
-});
-
-document.getElementById("menuBtn").addEventListener("click", () => {
-  document.getElementById("mainNav").classList.toggle("open");
-});
-
-renderProducts();
-renderCart();
