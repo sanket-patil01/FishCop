@@ -45,26 +45,13 @@
       <svg viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
     </a>
   </div>
-        <a href="#" class="track-order-link">Track Order</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- FIXED VERTICAL FLOATING SOCIAL BAR (Right Side Screen) -->
-  <div class="floating-social-bar">
-    <a href="#" class="fs-fb" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-    <a href="#" class="fs-tw" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a>
-    <a href="#" class="fs-ig" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-    <a href="#" class="fs-yt" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-    <a href="#" class="fs-li" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-  </div>
 
   <!-- HEADER -->
   <header class="site-header">
     <div class="container header-wrap">
       <a href="index.html" class="navbar-brand">
-  <img src="assets/logo.png" alt="FishCop" class="logo-img">
-</a>
+        <img src="assets/logo.png" alt="FishCop" class="logo-img">
+      </a>
 
       <nav class="main-nav" id="mainNav">
         <a href="#home">Home</a>
@@ -186,7 +173,7 @@
     </div>
   </section>
 
-  <!-- PRODUCT CATEGORIES SECTION (AFTER BEST SELLING PRODUCTS) -->
+  <!-- PRODUCT CATEGORIES SECTION -->
   <section class="categories-section">
     <div class="container">
       <div class="categories-header">
@@ -211,7 +198,8 @@
           <div class="cat-img-wrap"><img src="assets/cat-shelled.png" alt="Shelled Seafood"></div>
           <span>Shelled Seafood</span>
         </div>
-        <div class="category-item" onclick="filterCategory('dried')">
+        <!-- UPDATED: REDIRECTS TO DRIED FISH PAGE -->
+        <div class="category-item" onclick="window.location.href='dried-fish.html'" style="cursor: pointer;">
           <div class="cat-img-wrap"><img src="assets/cat-dried.png" alt="Dried Fish"></div>
           <span>Dried Fish</span>
         </div>
